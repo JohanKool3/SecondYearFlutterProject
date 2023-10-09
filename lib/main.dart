@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    GameWidget(game: MyGame()),
+  );
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyGame extends Game {
+  @override
+  void update(double dt) {}
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
-}
+  void render(Canvas canvas) {}}
