@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flame: ^1.9.1
+  sqflite: ^2.1.0
 
 dev_dependencies:
   flutter_test:
