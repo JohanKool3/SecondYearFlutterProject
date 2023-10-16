@@ -1,10 +1,8 @@
 import '../Managers/Grid.dart';
 
-class GameState{
-
-  double _time = 0;
-  late Grid _gameGrid;
-
+class GameState {
+  late double _time = 0;
+  late final Grid _gameGrid;
 
   GameState(this._time, this._gameGrid);
 
