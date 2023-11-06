@@ -1,6 +1,8 @@
+
+
 class GridContent {
   // Fields
-  final bool _isMine;
+  bool _isMine;
   final String
       _position; // This will be the position of the item in the dictionary
   late bool _isFlagged;
@@ -17,6 +19,7 @@ class GridContent {
   void revealSquare() => _isRevealed = true;
 
   void toggleFlag() => (isFlagged) ? _removeFlag() : _flagSquare();
+  void setMine() => _isMine = true;
 
   void _flagSquare() => _isFlagged = true;
   void _removeFlag() => _isFlagged = false;
