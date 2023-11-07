@@ -25,10 +25,8 @@ void main() {
   });
 
   group('Grid Contents, Methods', () {
-
     /// Tests for Toggle Flag
     test('Toggle Flag should make flagged True', () {
-
       // Arrange
       final test = GridContent(true, " ", false, false);
 
@@ -36,12 +34,11 @@ void main() {
       test.toggleFlag();
 
       // Assert
-      
+
       expect(test.isFlagged, true);
     });
 
     test('Toggle Flag should make flagged False', () {
-
       // Arrange
       final test = GridContent(true, " ", true, false);
       // Act
@@ -51,8 +48,7 @@ void main() {
     });
 
     // Tests for Reveal Square
-    test('Toggle Flag should make flagged False', () {
-
+    test('Reveal Flag should return True', () {
       // Arrange
       final test = GridContent(false, " ", true, false);
 
@@ -60,8 +56,7 @@ void main() {
       test.revealSquare();
 
       // Assert
-      expect(test.isRevealed, false);
+      expect(test.isRevealed, true);
     });
-    
   });
 }

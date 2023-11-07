@@ -1,39 +1,47 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/settings.dart';
 
-class GameInformation{
-
+class GameInformation {
   // TODO: Add time
-
-  late int  deployedFlags = 0;
-  late int flagsToPlace = 0;
+  late int deployedFlags = 0;
+  late int flagsToPlace = Settings.easyMines;
   late Difficulty difficulty = Difficulty.easy;
+  late (int, int) dimensions = Settings.easyDimensions;
   // TODO: Add Highscores
 
-  void setDifficulty(Difficulty difficulty){
-    this.difficulty = difficulty;
+  // Getters to make dimension references easier
+  int get width => dimensions.$1;
+  int get height => dimensions.$2;
 
-    switch(difficulty){
+  void setDifficulty(int value) {
+    difficulty = Difficulty.values[value];
+
+    switch (difficulty) {
+      // Setup the game information based on the difficulty
       case Difficulty.easy:
-        flagsToPlace = 10;
+        flagsToPlace = Settings.easyMines;
+        dimensions = Settings.easyDimensions;
         break;
       case Difficulty.medium:
-        flagsToPlace = 40;
+        flagsToPlace = Settings.mediumMines;
+        dimensions = Settings.mediumDimensions;
         break;
       case Difficulty.hard:
-        flagsToPlace = 99;
+        flagsToPlace = Settings.hardMines;
+        dimensions = Settings.hardDimensions;
         break;
     }
   }
 
-  void deployFlag(){
-    deployedFlags++;
-  }
+  void deployFlag() => (deployedFlags < flagsToPlace)
+      ? deployedFlags++
+      : throw Exception("Too many flags");
 
-  void removeFlag(){
-    deployedFlags--;
-  }
+  void removeFlag() => (deployedFlags > 0)
+      ? deployedFlags--
+      : throw Exception("No flags Deployed");
 
-  void incrementTime(){
+  void incrementTime() {
     // TODO: Implement time
   }
 }
