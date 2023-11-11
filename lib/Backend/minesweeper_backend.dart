@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/Backend/Enums/Difficulty.dart';
+import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Managers/Grid.dart';
 import 'package:flutter_application_1/Backend/Managers/game_information.dart';
 
@@ -10,7 +10,7 @@ class MinesweeperBackend {
   late Grid playingGrid;
 
   MinesweeperBackend() {
-    playingGrid = Grid(information.width, information.height);
+    playingGrid = Grid(information.difficulty);
   }
 
   void takeUserInput(String position) {}

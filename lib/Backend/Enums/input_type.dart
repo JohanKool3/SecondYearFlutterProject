@@ -1,0 +1,1 @@
+enum InputType { clear, flag }

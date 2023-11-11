@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/Backend/Enums/Difficulty.dart';
+import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Managers/game_information.dart';
 import 'package:flutter_application_1/Backend/settings.dart';
 import 'package:test/test.dart';
@@ -62,6 +62,14 @@ void main() {
         test.deployFlag();
       }
       expect(() => test.deployFlag(), throwsA(isA<Exception>()));
+    });
+
+    // TODO: Make sure this unit test is functioning as intended
+    test('Game Information time should be 1', () {
+      late GameInformation test = GameInformation();
+      while (test.time != 1) {}
+      expect(test.time, 1);
+      test.stopTimer();
     });
   });
 }

@@ -1,5 +1,4 @@
-import 'package:flutter_application_1/Backend/Enums/Difficulty.dart';
-import 'package:flutter_application_1/Backend/Managers/game_information.dart';
+import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 import 'package:test/test.dart';
 

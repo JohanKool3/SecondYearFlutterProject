@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/settings.dart';
 
 class GameInformation {
-  // TODO: Add time
+  late int time = 0;
+  Timer? timer;
   late int deployedFlags = 0;
   late int flagsToPlace = Settings.easyMines;
   late Difficulty difficulty = Difficulty.easy;
@@ -12,6 +15,12 @@ class GameInformation {
   // Getters to make dimension references easier
   int get width => dimensions.$1;
   int get height => dimensions.$2;
+
+  GameInformation() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      time++;
+    });
+  }
 
   void setDifficulty(int value) {
     difficulty = Difficulty.values[value];
@@ -41,7 +50,11 @@ class GameInformation {
       ? deployedFlags--
       : throw Exception("No flags Deployed");
 
-  void incrementTime() {
-    // TODO: Implement time
+  void stopTimer() {
+    timer?.cancel();
+  }
+
+  void resetTime() {
+    time = 0;
   }
 }
