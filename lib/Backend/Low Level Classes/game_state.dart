@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
-import 'Grid.dart';
+import '../Managers/Grid.dart';
 
 class GameState {
   int time = 0; // Time in seconds
