@@ -15,11 +15,17 @@ class GameStateManager {
   void newGameState() {
     currentState = GameState(difficulty, 0);
   }
+  
+  void newGameStateWithDifficulty(Difficulty newDifficulty) {
+    setNewDifficulty(newDifficulty);
+    currentState = GameState(newDifficulty, 0);
+    
+  }
 
   void setNewDifficulty(Difficulty newDifficulty) => difficulty = newDifficulty;
 
   bool loadGameState() {
-    // TODO: Load From Database
+    // TODO: Load From Database using a given query string. This will be hard coded
 
     return false;
   }
