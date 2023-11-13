@@ -22,10 +22,11 @@ class GameInformation {
     });
   }
 
-  void setDifficulty(int value) {
-    difficulty = Difficulty.values[value];
+  void setDifficulty(Difficulty newDifficulty) {
 
-    switch (difficulty) {
+    difficulty = newDifficulty;
+
+    switch (newDifficulty) {
       // Setup the game information based on the difficulty
       case Difficulty.easy:
         flagsToPlace = Settings.easyMines;

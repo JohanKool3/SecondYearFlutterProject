@@ -21,5 +21,5 @@ class MinesweeperBackend {
     // Set game information to the initial values
   }
 
-  void setNewDifficulty(Difficulty difficulty) {}
+  void setNewDifficulty(Difficulty difficulty) => information.setDifficulty(difficulty);
 }

@@ -36,7 +36,7 @@ void main() {
   group('Game Information, methods', () {
     test('Game Information should have a default difficulty of medium', () {
       late GameInformation test = GameInformation();
-      test.setDifficulty(1);
+      test.setDifficulty(Difficulty.medium);
 
       // Have to cast to string because comparing enums is buggy
       expect(test.difficulty.toString(), Difficulty.medium.toString());
