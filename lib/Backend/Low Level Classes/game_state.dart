@@ -24,4 +24,8 @@ class GameState {
     grid = Grid(difficulty);
     time = 0;
   }
+
+  void importCustomGrid(Grid newGrid) {
+    grid = newGrid;
+  }
 }

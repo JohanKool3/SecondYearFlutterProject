@@ -7,6 +7,7 @@ import 'package:flutter_application_1/Backend/settings.dart';
 class Grid {
   Map<String, GridContent> contents = {};
   (int, int) dimensions = (0, 0);
+  bool isGameOver = false;
 
   Grid(Difficulty difficulty) {
     setGrid(difficulty);
@@ -55,7 +56,7 @@ class Grid {
 
       // Check if the square is a mine
       if (_checkForMine(position)) {
-        // End the game
+        isGameOver = true;
       }
       _checkForField(position);
     } else {

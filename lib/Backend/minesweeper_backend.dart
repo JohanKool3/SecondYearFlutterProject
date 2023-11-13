@@ -1,24 +1,37 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/Managers/Grid.dart';
 import 'package:flutter_application_1/Backend/Managers/game_information.dart';
+import 'package:flutter_application_1/Backend/Managers/game_state_manager.dart';
 
 class MinesweeperBackend {
   GameInformation information = GameInformation();
+  GameStateManager stateManager = GameStateManager(Difficulty.easy);
+  Grid get playingGrid => stateManager.currentState.grid;
 
-  // TODO: Implement Game State Manager
+  MinesweeperBackend();
 
-  late Grid playingGrid;
+  void takeUserInput(String position, InputType type) {
 
-  MinesweeperBackend() {
-    playingGrid = Grid(information.difficulty);
+    switch(type){
+      case InputType.flag:
+        playingGrid.placeFlag(position);
+        break;
+      case InputType.clear:
+        playingGrid.revealSquare(position);
+        break;
+    }
+
+    if(playingGrid.isGameOver){
+      // TODO: Give the user a game over screen (front end), handle a reset or change difficulty
+    }
   }
 
-  void takeUserInput(String position) {}
-
   void resetGame() {
-    // Set a new Grid that is in play
-
+    // Set a new Game State
+    stateManager.newGameState();
     // Set game information to the initial values
+    information = GameInformation();
   }
 
   void setNewDifficulty(Difficulty difficulty) => information.setDifficulty(difficulty);

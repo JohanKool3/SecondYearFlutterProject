@@ -5,7 +5,7 @@ class GameStateManager {
   late GameState currentState;
   Difficulty difficulty = Difficulty.easy;
 
-  GameStateManager() {
+  GameStateManager(this.difficulty) {
     //Try to load first! If you cant load then generate a new one
     if (!loadGameState()) {
       newGameState();
