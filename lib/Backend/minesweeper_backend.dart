@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
-import 'package:flutter_application_1/Backend/Managers/Grid.dart';
+import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:flutter_application_1/Backend/Managers/game_information.dart';
 import 'package:flutter_application_1/Backend/Managers/game_state_manager.dart';
 
@@ -11,19 +11,17 @@ class MinesweeperBackend {
 
   MinesweeperBackend();
 
-  void takeUserInput(String position, InputType type) {
+  // Returns if the game is running
+  bool returnGameState() => !playingGrid.isGameOver;
 
-    switch(type){
+  void takeUserInput(String position, InputType type) {
+    switch (type) {
       case InputType.flag:
         playingGrid.placeFlag(position);
         break;
       case InputType.clear:
         playingGrid.revealSquare(position);
         break;
-    }
-
-    if(playingGrid.isGameOver){
-      // TODO: Give the user a game over screen (front end), handle a reset or change difficulty
     }
   }
 
@@ -34,5 +32,6 @@ class MinesweeperBackend {
     information = GameInformation();
   }
 
-  void setNewDifficulty(Difficulty difficulty) => information.setDifficulty(difficulty);
+  void setNewDifficulty(Difficulty difficulty) =>
+      information.setDifficulty(difficulty);
 }

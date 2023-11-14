@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('Game State Manager, fields', () {
-    test('difficulty is initialized to easy', () {
+    test('Difficulty is initialized to easy', () {
       GameStateManager test = GameStateManager(Difficulty.easy);
 
       expect(test.difficulty.toString(), Difficulty.easy.toString());
@@ -31,7 +31,9 @@ void main() {
       expect(test.difficulty.toString(), Difficulty.easy.toString());
     });
 
-    test('newGameStateWithDifficulty should generate Game State with medium difficulty', () {
+    test(
+        'newGameStateWithDifficulty should generate Game State with medium difficulty',
+        () {
       GameStateManager test = GameStateManager(Difficulty.easy);
       test.newGameStateWithDifficulty(Difficulty.medium);
 
