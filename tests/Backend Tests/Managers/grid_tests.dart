@@ -1,20 +1,20 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
-import 'package:flutter_application_1/Backend/Managers/Grid.dart';
+import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Grid, fields', () {
-    test('Grid Dimensions should be initialized to 16, 16', () {
+    test('Dimensions should be initialized to 16, 16', () {
       final test = Grid(Difficulty.medium);
       expect(test.dimensions, (16, 16));
     });
 
-    test('Grid Contents should be initialized to have 256 items', () {
+    test('Contents should be initialized to have 256 items', () {
       final test = Grid(Difficulty.medium);
       expect(test.contents.length, 256);
     });
 
-    test('Grid Contents should contain 40 mines', () {
+    test('Contents should contain 40 mines', () {
       final test = Grid(Difficulty.medium);
       int mineCount = 0;
       test.contents.forEach((key, value) {
@@ -27,7 +27,7 @@ void main() {
   });
 
   group('Grid, methods', () {
-    test('Grid should be set to 8 by 5', () {
+    test('Dimensions should be set to 8 by 5', () {
       final test = Grid(Difficulty.medium);
       test.setGridSpecificly(8, 5);
       expect(test.dimensions, (8, 5));

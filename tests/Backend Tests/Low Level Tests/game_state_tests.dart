@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
-import 'package:flutter_application_1/Backend/Managers/Grid.dart';
+import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/game_state.dart';
 import 'package:test/test.dart';
 
