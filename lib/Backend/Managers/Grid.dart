@@ -34,10 +34,12 @@ class Grid {
     _setupContents(mineAmount);
   }
 
-  void setGridSpecificly(int width, int height) {
+  void setGridSpecificly(int width, int height, {int mineAmount = 40}) {
     // This method is PURELY for testing purposes
     _setDimensions(width, height);
-    _setupContents(40);
+
+    // Dynamically change mine amount via a parameter
+    _setupContents(mineAmount);
   }
 
   void placeFlag(String position) {
@@ -75,6 +77,8 @@ class Grid {
   }
 
   void _setupContents(int difficultyMines) {
+    contents = {};
+
     int width = dimensions.$1;
     int height = dimensions.$2;
 
