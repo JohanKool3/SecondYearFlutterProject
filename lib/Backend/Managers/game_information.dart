@@ -9,12 +9,12 @@ class GameInformation {
   late int deployedFlags = 0;
   late int flagsToPlace = Settings.easyMines;
   late Difficulty difficulty = Difficulty.easy;
-  late (int, int) dimensions = Settings.easyDimensions;
+  late List<int> dimensions = Settings.easyDimensions;
   // TODO: Add Highscores
 
   // Getters to make dimension references easier
-  int get width => dimensions.$1;
-  int get height => dimensions.$2;
+  int get width => dimensions[0];
+  int get height => dimensions[1];
 
   GameInformation() {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
@@ -23,7 +23,6 @@ class GameInformation {
   }
 
   void setDifficulty(Difficulty newDifficulty) {
-
     difficulty = newDifficulty;
 
     switch (newDifficulty) {

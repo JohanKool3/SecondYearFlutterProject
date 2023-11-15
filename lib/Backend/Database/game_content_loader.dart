@@ -31,10 +31,10 @@ class GameContentLoader {
   static List<List<String>> saveContents(Grid grid) {
     List<List<String>> outputGrid = [];
 
-    for (int i = 0; i < grid.dimensions.$1; i++) {
+    for (int i = 0; i < grid.dimensions[0]; i++) {
       List<String> row = [];
 
-      for (int j = 0; j < grid.dimensions.$2; j++) {
+      for (int j = 0; j < grid.dimensions[1]; j++) {
         String squareTag = generateSquareTag(grid.contents["($i, $j)"]!);
         row.add(squareTag);
       }
