@@ -1,5 +1,5 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
-import 'package:flutter_application_1/Backend/Low%20Level%20Classes/highscore_entry.dart';
+import 'package:flutter_application_1/Backend/Database/Models/highscore_entry.dart';
 import 'package:flutter_application_1/Backend/Managers/high_score_manager.dart';
 import 'package:test/test.dart';
 
