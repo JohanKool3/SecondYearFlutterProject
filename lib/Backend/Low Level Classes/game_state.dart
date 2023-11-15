@@ -8,9 +8,13 @@ class GameState {
   late Grid grid;
   late Difficulty difficulty = Difficulty.easy;
 
-  GameState(this.difficulty, this.time) {
+  GameState(this.difficulty, this.time, {Grid? grid}) {
     // Takes Time as a parameter for loading gamestates
-    grid = Grid(difficulty);
+    if (grid != null) {
+      this.grid = grid;
+    } else {
+      this.grid = Grid(difficulty);
+    }
   }
 
   void takeInput(InputType type, String position) => switch (type) {
