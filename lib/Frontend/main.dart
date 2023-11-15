@@ -1,9 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Backend/Database/Models/game_state_model.dart';
+import 'package:hive_flutter/adapters.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //INSERT CODE HERE
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(GameStateModelAdapter());
+  await Hive.openBox<GameStateModel>('gameStateProduction');
 
   runApp(
     const MaterialApp(
