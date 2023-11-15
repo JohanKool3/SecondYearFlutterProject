@@ -15,11 +15,10 @@ class GameStateManager {
   void newGameState() {
     currentState = GameState(difficulty, 0);
   }
-  
+
   void newGameStateWithDifficulty(Difficulty newDifficulty) {
     setNewDifficulty(newDifficulty);
     currentState = GameState(newDifficulty, 0);
-    
   }
 
   void setNewDifficulty(Difficulty newDifficulty) => difficulty = newDifficulty;
