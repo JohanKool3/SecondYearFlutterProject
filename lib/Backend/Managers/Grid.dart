@@ -6,7 +6,7 @@ import 'package:flutter_application_1/Backend/settings.dart';
 
 class Grid {
   Map<String, GridContent> contents = {};
-  (int, int) dimensions = (0, 0);
+  List<int> dimensions = [0, 0];
   bool isGameOver = false;
 
   Grid(Difficulty difficulty) {
@@ -15,13 +15,13 @@ class Grid {
 
   void setGrid(Difficulty difficulty) {
     // Use of switch expressions simplifies method call
-    (int, int) dimensions = switch (difficulty) {
+    List<int> dimensions = switch (difficulty) {
       Difficulty.easy => Settings.easyDimensions,
       Difficulty.medium => Settings.mediumDimensions,
       Difficulty.hard => Settings.hardDimensions,
     };
-    int width = dimensions.$1;
-    int height = dimensions.$2;
+    int width = dimensions[0];
+    int height = dimensions[1];
 
     _setDimensions(width, height);
 
@@ -73,14 +73,14 @@ class Grid {
   bool _checkForMine(String position) => contents[position]?.isMine ?? false;
 
   void _setDimensions(int width, int height) {
-    dimensions = (width, height);
+    dimensions = [width, height];
   }
 
   void _setupContents(int difficultyMines) {
     contents = {};
 
-    int width = dimensions.$1;
-    int height = dimensions.$2;
+    int width = dimensions[0];
+    int height = dimensions[1];
 
     // Setup the grid
     for (int i = 0; i < width; i++) {

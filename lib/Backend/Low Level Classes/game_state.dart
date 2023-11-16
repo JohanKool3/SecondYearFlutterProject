@@ -1,3 +1,5 @@
+import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
+import 'package:flutter_application_1/Backend/Database/game_content_loader.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import '../Managers/grid.dart';
@@ -31,5 +33,10 @@ class GameState {
 
   void importCustomGrid(Grid newGrid) {
     grid = newGrid;
+  }
+
+  GameStateModel toModel() {
+    List<List<String>> grid = GameContentLoader.saveContents(this);
+    return GameStateModel(difficulty.index, time, grid);
   }
 }

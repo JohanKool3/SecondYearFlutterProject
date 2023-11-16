@@ -6,7 +6,7 @@ void main() {
   group('Grid, fields', () {
     test('Dimensions should be initialized to 16, 16', () {
       final test = Grid(Difficulty.medium);
-      expect(test.dimensions, (16, 16));
+      expect(test.dimensions, [16, 16]);
     });
 
     test('Contents should be initialized to have 256 items', () {
@@ -30,7 +30,7 @@ void main() {
     test('Dimensions should be set to 8 by 5', () {
       final test = Grid(Difficulty.medium);
       test.setGridSpecificly(8, 5);
-      expect(test.dimensions, (8, 5));
+      expect(test.dimensions, [8, 5]);
     });
 
     test('First item should be a mine', () {

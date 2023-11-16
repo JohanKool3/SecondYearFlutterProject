@@ -1,7 +1,7 @@
 import 'package:flutter_application_1/Backend/Database/game_content_loader.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/Low%20Level%20Classes/game_state.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
-import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -24,9 +24,11 @@ void main() {
       ];
 
       // Ensure that during the process, the grid is not modified
-      Grid testGrid =
-          GameContentLoader.loadContents(Difficulty.medium, rawGrid);
-      List<List<String>> outputGrid = GameContentLoader.saveContents(testGrid);
+
+      GameState state = GameState(Difficulty.medium, 0);
+      state.grid = GameContentLoader.loadContents(Difficulty.medium, rawGrid);
+
+      List<List<String>> outputGrid = GameContentLoader.saveContents(state);
 
       expect(rawGrid, outputGrid);
     });

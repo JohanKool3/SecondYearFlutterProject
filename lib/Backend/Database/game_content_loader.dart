@@ -1,6 +1,9 @@
+import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/Low%20Level%20Classes/game_state.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Backend/Managers/grid.dart';
+import 'package:hive/hive.dart';
 
 class GameContentLoader {
   static Grid loadContents(Difficulty difficulty, List<List<String>> rawGrid) {
@@ -28,20 +31,20 @@ class GameContentLoader {
     return outputGrid;
   }
 
-  static List<List<String>> saveContents(Grid grid) {
+  static List<List<String>> saveContents(GameState gameState) {
     List<List<String>> outputGrid = [];
+    Grid grid = gameState.grid;
 
-    for (int i = 0; i < grid.dimensions.$1; i++) {
+    for (int i = 0; i < grid.dimensions[0]; i++) {
       List<String> row = [];
 
-      for (int j = 0; j < grid.dimensions.$2; j++) {
+      for (int j = 0; j < grid.dimensions[1]; j++) {
         String squareTag = generateSquareTag(grid.contents["($i, $j)"]!);
         row.add(squareTag);
       }
       outputGrid.add(row);
     }
 
-    // TODO: Save the grid and information to the database, when DB is implemented
     return outputGrid;
   }
 
@@ -74,5 +77,18 @@ class GameContentLoader {
     }
 
     return output;
+  }
+
+  static int _generateDifficultyId(Difficulty difficulty) {
+    switch (difficulty) {
+      case Difficulty.easy:
+        return 0;
+      case Difficulty.medium:
+        return 1;
+      case Difficulty.hard:
+        return 2;
+      default:
+        return 0;
+    }
   }
 }
