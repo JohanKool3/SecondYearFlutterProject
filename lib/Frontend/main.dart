@@ -28,13 +28,14 @@ class _MyFlutterAppState extends State<MyFlutterApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Minesweeper'),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
+            Text(
               'Welcome to Minesweeper!',
             ),
           ],
