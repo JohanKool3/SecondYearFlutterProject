@@ -1,13 +1,17 @@
+import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
+import 'package:flutter_application_1/Backend/Database/game_content_loader.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/game_state.dart';
+import 'package:flutter_application_1/Backend/Managers/grid.dart';
+import 'package:hive/hive.dart';
 
 class GameStateManager {
   late GameState currentState;
   Difficulty difficulty = Difficulty.easy;
 
-  GameStateManager(this.difficulty) {
+  GameStateManager(this.difficulty, {Box? database}) {
     //Try to load first! If you cant load then generate a new one
-    if (!loadGameState()) {
+    if (!loadGameState(database)) {
       newGameState();
     }
   }
@@ -23,9 +27,48 @@ class GameStateManager {
 
   void setNewDifficulty(Difficulty newDifficulty) => difficulty = newDifficulty;
 
-  bool loadGameState() {
-    // TODO: Load From Database using a given query string. This will be hard coded
+  bool loadGameState(Box? database) {
+    // For Testing
+    if (database == null) {
+      return false;
+    }
 
-    return false;
+    // Fetch a save state from the database
+    try {
+      // Fetch the model from the database
+      GameStateModel model = database.get(1);
+
+      // Map the difficulty
+      Difficulty difficulty = Difficulty.values[model.difficultyId];
+      Grid grid = GameContentLoader.loadContents(difficulty, model.grid);
+
+      // Convert to game state
+      GameState state = GameState(difficulty, model.time, grid: grid);
+
+      // Set game state
+      currentState = state;
+
+      // Delete entry from database
+      database.delete(1);
+      _debugPrint(state);
+      return true;
+      // No save state has been found, return false
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void saveGameState(Box database) {
+    // Save the game state to the database
+
+    database.put(1, currentState.toModel());
+  }
+
+  void _debugPrint(GameState state) {
+    List<List<String>> gridList = GameContentLoader.saveContents(state);
+
+    for (List<String> row in gridList) {
+      print(row);
+    }
   }
 }

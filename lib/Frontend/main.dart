@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Backend/Database/Models/game_state_model.dart';
+import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
+import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 import 'package:hive_flutter/adapters.dart';
+
+late MinesweeperBackend backend;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
   Hive.registerAdapter(GameStateModelAdapter());
-  await Hive.openBox<GameStateModel>('gameStateProduction');
 
-  runApp(
-    const MaterialApp(
-      home: MyFlutterApp(),
-    ),
-  );
+  backend = MinesweeperBackend(
+      await Hive.openBox<GameStateModel>('gameStateProduction'));
+  backend.saveGameState();
+  Hive.close();
+
+  // runApp(
+  //   const MaterialApp(
+  //     home: MyFlutterApp(),
+  //   ),
+  // );
 }
 
 class MyFlutterApp extends StatefulWidget {

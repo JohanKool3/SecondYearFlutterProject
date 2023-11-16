@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/Backend/Database/Models/game_state_model.dart';
+import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -11,7 +11,7 @@ void main() {
         ["RNF", "RNF", "RNF", "RNN"]
       ];
 
-      expect(() => GameStateModel(1, 1, 4, rawGrid), returnsNormally);
+      expect(() => GameStateModel(1, 4, rawGrid), returnsNormally);
     });
 
     test('Initialization returns error due to invalid difficulty', () {
@@ -22,7 +22,7 @@ void main() {
         ["RNF", "RNF", "RNF", "RNN"]
       ];
 
-      expect(() => GameStateModel(1, 10, 4, rawGrid), throwsException);
+      expect(() => GameStateModel(10, 4, rawGrid), throwsException);
     });
 
     test('Get Game State runs as normal', () {
@@ -32,7 +32,7 @@ void main() {
         ["RNF", "RNF", "RNF", "RNN"],
         ["RNF", "RNF", "RNF", "RNN"]
       ];
-      GameStateModel test = GameStateModel(1, 1, 4, rawGrid);
+      GameStateModel test = GameStateModel(1, 4, rawGrid);
 
       expect(() => test.grid[0][0], returnsNormally);
     });

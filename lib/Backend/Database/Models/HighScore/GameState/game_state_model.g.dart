@@ -19,8 +19,7 @@ class GameStateModelAdapter extends TypeAdapter<GameStateModel> {
     return GameStateModel(
       fields[0] as int,
       fields[1] as int,
-      fields[2] as int,
-      (fields[3] as List)
+      (fields[2] as List)
           .map((dynamic e) => (e as List).cast<String>())
           .toList(),
     );
@@ -29,14 +28,12 @@ class GameStateModelAdapter extends TypeAdapter<GameStateModel> {
   @override
   void write(BinaryWriter writer, GameStateModel obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.difficultyId)
-      ..writeByte(2)
-      ..write(obj.time)
       ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.difficultyId)
+      ..writeByte(1)
+      ..write(obj.time)
+      ..writeByte(2)
       ..write(obj.grid);
   }
 
