@@ -8,10 +8,13 @@ class Grid {
   Map<String, GridContent> contents = {};
   List<int> dimensions = [0, 0];
   bool isGameOver = false;
+  late int unFlaggedMines = 0; // How many mines have been correctly flagged
 
   Grid(Difficulty difficulty) {
     setGrid(difficulty);
   }
+
+  bool gameIsWon() => unFlaggedMines == 0 && !isGameOver;
 
   void setGrid(Difficulty difficulty) {
     // Use of switch expressions simplifies method call
@@ -32,6 +35,7 @@ class Grid {
     };
     // Setup the grid
     _setupContents(mineAmount);
+    unFlaggedMines = mineAmount;
   }
 
   void setGridSpecificly(int width, int height, {int mineAmount = 40}) {
@@ -45,6 +49,11 @@ class Grid {
   void placeFlag(String position) {
     if (_validateInput(position)) {
       contents[position]?.toggleFlag();
+
+      // Check if the square is a mine
+      if (_checkForMine(position)) {
+        unFlaggedMines--;
+      }
     } else {
       throw Exception("Positon is not valid");
     }
@@ -68,6 +77,21 @@ class Grid {
 
   void _checkForField(String position) {
     // Check for neighbouring squares which are also empty Only if the current position is also empty
+
+    if (contents[position]?.value == 0) {
+      // Generate the surrounding squares
+      List<String> surroundingSquares =
+          _generateSurroundingSquares(position).toList();
+
+      // Loop through the surrounding squares
+      for (String square in surroundingSquares) {
+        // Check if the square is already revealed
+        if (!contents[square]!.isRevealed) {
+          // Reveal the square
+          revealSquare(square);
+        }
+      }
+    }
   }
 
   bool _checkForMine(String position) => contents[position]?.isMine ?? false;
@@ -76,7 +100,7 @@ class Grid {
     dimensions = [width, height];
   }
 
-  void _setupContents(int difficultyMines) {
+  void _setupContents(int difficultyMines, {custom = false}) {
     contents = {};
 
     int width = dimensions[0];
@@ -91,7 +115,7 @@ class Grid {
 
     // Setup the mines
     int currentMines = 0;
-    // TODO: Implement a difficulty scaling on mine amount
+    // Checks for custom mine amounts that are used for TESTING
     int mineAmount = difficultyMines;
 
     // Guard Clause to prevent infinite loops
@@ -116,6 +140,30 @@ class Grid {
   }
 
   bool _validateInput(String input) => contents.containsKey(input);
+
+  int getMineAmount() {
+    int mineAmount = 0;
+
+    for (GridContent item in contents.values) {
+      if (item.isMine) {
+        mineAmount++;
+      }
+    }
+
+    return mineAmount;
+  }
+
+  int getFlaggedMineAmount() {
+    int flagAmount = 0;
+
+    for (GridContent item in contents.values) {
+      if (item.isFlagged && item.isMine) {
+        flagAmount++;
+      }
+    }
+
+    return flagAmount;
+  }
 
   void setupValues() {
     // Setup the values of the grid

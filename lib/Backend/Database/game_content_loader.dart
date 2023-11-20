@@ -28,6 +28,10 @@ class GameContentLoader {
       }
     }
     outputGrid.setupValues();
+    int mineAmount = outputGrid.getMineAmount();
+    int flaggedMines = outputGrid.getFlaggedMineAmount();
+
+    outputGrid.unFlaggedMines = mineAmount - flaggedMines;
 
     return outputGrid;
   }

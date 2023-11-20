@@ -2,6 +2,7 @@ import 'package:flutter_application_1/Backend/Database/game_content_loader.dart'
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Backend/Managers/grid.dart';
+import 'package:flutter_application_1/Backend/settings.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -88,6 +89,77 @@ void main() {
       }
 
       expect(total, greaterThan(0));
+    });
+
+    test('Grid should be completely revealed', () {
+      List<List<String>> rawGrid = [
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UMN", "UNN"],
+        ["UNN", "UMN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+
+      test.revealSquare("(0, 0)");
+    });
+
+    test('Unflagged mines should be 1', () {
+      List<List<String>> rawGrid = [
+        ["UMN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+
+      expect(test.unFlaggedMines, 1);
+    });
+
+    test('Mine amount should be equal to easy mine amount', () {
+      final test = Grid(Difficulty.easy);
+
+      expect(test.unFlaggedMines, Settings.easyMines);
+    });
+
+    test('Mine amount should be equal to medium mine amount', () {
+      final test = Grid(Difficulty.medium);
+
+      expect(test.unFlaggedMines, Settings.mediumMines);
+    });
+
+    test('Mine amount should be equal to hard mine amount', () {
+      final test = Grid(Difficulty.hard);
+
+      expect(test.unFlaggedMines, Settings.hardMines);
+    });
+
+    test('Unflagged mines should be 0', () {
+      List<List<String>> rawGrid = [
+        ["UMF", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+
+      expect(test.unFlaggedMines, 0);
+    });
+
+    test('Unflagged mines should be 0, after flag is placed', () {
+      List<List<String>> rawGrid = [
+        ["UMN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+      test.placeFlag("(0, 0)");
+
+      expect(test.unFlaggedMines, 0);
     });
   });
 }
