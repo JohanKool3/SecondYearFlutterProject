@@ -110,7 +110,60 @@ class Grid {
         currentMines++;
       }
     }
+
+    // Setup the values
+    setupValues();
   }
 
   bool _validateInput(String input) => contents.containsKey(input);
+
+  void setupValues() {
+    // Setup the values of the grid
+
+    // Loop through the grid
+    for (GridContent content in contents.values) {
+      // Check for mines
+
+      // Find position
+      String position = content.position;
+
+      if (!content.isMine) {
+        for (String surroundingSquare
+            in _generateSurroundingSquares(position)) {
+          // If the square is invalid, it'll be null (therefore return false)
+          if (contents[surroundingSquare]?.isMine ?? false) {
+            // Increment the value of the surrounding squares
+            content.incrementValue();
+          }
+        }
+      }
+    }
+  }
+
+  List<String> _generateSurroundingSquares(String position) {
+    List<String> surroundingSquares = [];
+    int x = int.parse(position.substring(1, position.indexOf(",")));
+    int y = int.parse(
+        position.substring(position.indexOf(",") + 2, position.length - 1));
+
+    List<List<int>> directions = [
+      [1, 0], // Right
+      [1, 1], // Up Right
+      [0, 1], // Up
+      [-1, 1], // Down Right
+      [-1, 0], // Right
+      [-1, -1], // Down Left
+      [0, -1], // Down
+      [1, -1] // Up Left
+    ];
+
+    for (List<int> direction in directions) {
+      String position = "(${x + direction[0]}, ${y + direction[1]})";
+
+      if (_validateInput(position)) {
+        surroundingSquares.add(position);
+      }
+    }
+    return surroundingSquares;
+  }
 }

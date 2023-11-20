@@ -27,6 +27,7 @@ class GameContentLoader {
             GridContent(isMine, "($row, $column)", isFlagged, isRevealed);
       }
     }
+    outputGrid.setupValues();
 
     return outputGrid;
   }

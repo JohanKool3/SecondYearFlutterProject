@@ -1,4 +1,6 @@
+import 'package:flutter_application_1/Backend/Database/game_content_loader.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:test/test.dart';
 
@@ -49,6 +51,43 @@ void main() {
       final test = Grid(Difficulty.medium);
       test.revealSquare("(0, 0)");
       expect(test.contents["(0, 0)"]?.isRevealed, true);
+    });
+
+    test('Generate values works as intended', () {
+      List<List<String>> rawGrid = [
+        ["UMN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+
+      expect(test.contents["(1, 0)"]?.value, 1);
+    });
+
+    test('Position (1, 1) should have a value of 8', () {
+      List<List<String>> rawGrid = [
+        ["UMN", "UMN", "UMN", "UNN"],
+        ["UMN", "UNN", "UMN", "UNN"],
+        ["UMN", "UMN", "UMN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+
+      expect(test.contents["(1, 1)"]?.value, 8);
+    });
+
+    test('Grid should contain total value greater than 0', () {
+      final test = Grid(Difficulty.easy);
+      int total = 0;
+
+      for (GridContent content in test.contents.values) {
+        total += content.value;
+      }
+
+      expect(total, greaterThan(0));
     });
   });
 }

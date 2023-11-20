@@ -1,5 +1,3 @@
-
-
 class GridContent {
   // Fields
   bool _isMine;
@@ -7,6 +5,7 @@ class GridContent {
       _position; // This will be the position of the item in the dictionary
   late bool _isFlagged;
   late bool _isRevealed;
+  int _value = 0;
 
   GridContent(this._isMine, this._position, this._isFlagged, this._isRevealed);
 
@@ -15,6 +14,7 @@ class GridContent {
   String get position => _position;
   bool get isFlagged => _isFlagged;
   bool get isRevealed => _isRevealed;
+  int get value => _value;
 
   void revealSquare() => _isRevealed = true;
 
@@ -23,4 +23,6 @@ class GridContent {
 
   void _flagSquare() => _isFlagged = true;
   void _removeFlag() => _isFlagged = false;
+
+  void incrementValue() => _value++;
 }
