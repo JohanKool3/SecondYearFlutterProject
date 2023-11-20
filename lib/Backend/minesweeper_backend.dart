@@ -20,6 +20,8 @@ class MinesweeperBackend {
   // Returns if the game is running
   bool returnGameState() => !playingGrid.isGameOver;
 
+  bool isGameWon() => playingGrid.gameIsWon();
+
   void takeUserInput(String position, InputType type) {
     switch (type) {
       case InputType.flag:

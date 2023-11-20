@@ -14,6 +14,7 @@ class Grid {
     setGrid(difficulty);
   }
 
+  // TODO: Work on this method to ensure that it doesn't break the rules
   bool gameIsWon() => unFlaggedMines == 0 && !isGameOver;
 
   void setGrid(Difficulty difficulty) {
