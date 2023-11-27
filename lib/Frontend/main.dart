@@ -1,7 +1,10 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
+import 'package:flutter_application_1/Frontend/minesweeper.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 
 late MinesweeperBackend backend;
 
@@ -13,41 +16,17 @@ void main() async {
 
   backend = MinesweeperBackend(
       await Hive.openBox<GameStateModel>('gameStateProduction'));
-  backend.saveGameState();
-  Hive.close();
+
+  // backend.takeUserInput("(0, 0)", InputType.flag);
+  // backend.takeUserInput("(0, 3)", InputType.flag);
+  
 
   // runApp(
   //   const MaterialApp(
   //     home: MyFlutterApp(),
   //   ),
   // );
-}
-
-class MyFlutterApp extends StatefulWidget {
-  const MyFlutterApp({Key? key}) : super(key: key);
-
-  @override
-  _MyFlutterAppState createState() => _MyFlutterAppState();
-}
-
-class _MyFlutterAppState extends State<MyFlutterApp> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Minesweeper'),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome to Minesweeper!',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  runApp(GameWidget(game: Minesweeper(backend)));
+  backend.saveGameState();
+  Hive.close();
 }
