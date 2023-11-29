@@ -75,9 +75,9 @@ class GameStateManager {
       for (int column = 0; column < height; column++) {
         String item = gridList[row][column];
 
-        rowString += item + ",";
+        rowString += "$item,";
       }
-      print(rowString + "]");
+      print("$rowString]");
     }
   }
 }

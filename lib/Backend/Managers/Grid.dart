@@ -101,7 +101,7 @@ class Grid {
     dimensions = [width, height];
   }
 
-  void _setupContents(int difficultyMines, {custom = false}) {
+  void _setupContents(int difficultyMines) {
     contents = {};
 
     int width = dimensions[0];
