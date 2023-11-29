@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/Backend/Database/game_content_loader.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/Low%20Level%20Classes/game_state.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:flutter_application_1/Backend/settings.dart';
@@ -160,6 +161,43 @@ void main() {
       test.placeFlag("(0, 0)");
 
       expect(test.unFlaggedMines, 0);
+    });
+
+    test('Flag should be in the correct position', () {
+      List<List<String>> rawGrid = [
+        ["UMN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+      String position = "(0, 1)";
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+      test.placeFlag(position);
+
+      expect(test.contents[position]!.isFlagged, true);
+    });
+
+    test('Flag should be in the correct position after save and reload', () {
+      List<List<String>> rawGrid = [
+        ["UMN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"],
+        ["UNN", "UNN", "UNN", "UNN"]
+      ];
+      String position = "(0, 1)";
+
+      // Create the test grid from the raw Grid (will be fetched from the database)
+      final test = GameContentLoader.loadContents(Difficulty.easy, rawGrid);
+      test.placeFlag(position);
+
+      // Save the game state
+      GameState state = GameState(Difficulty.easy, 0, grid: test);
+      List<List<String>> savedGame = GameContentLoader.saveContents(state);
+
+      // Load the game state
+      final test2 = GameContentLoader.loadContents(Difficulty.easy, savedGame);
+
+      expect(test2.contents[position]!.isFlagged, true);
     });
   });
 }

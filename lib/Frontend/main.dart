@@ -17,10 +17,6 @@ void main() async {
   backend = MinesweeperBackend(
       await Hive.openBox<GameStateModel>('gameStateProduction'));
 
-  // backend.takeUserInput("(0, 0)", InputType.flag);
-  // backend.takeUserInput("(0, 3)", InputType.flag);
-  
-
   // runApp(
   //   const MaterialApp(
   //     home: MyFlutterApp(),

@@ -22,13 +22,6 @@ class MinesweeperBackend {
   bool isGameWon() => playingGrid.gameIsWon();
 
   void takeUserInput(String position, InputType type) {
-
-    // Split the string into a list of strings
-    List<String> positionList = position.substring(1, position.length - 1).split(", ");
-    String x = positionList[0];
-    String y = positionList[1];
-
-    position = "($y, $x)";
     switch (type) {
       case InputType.flag:
         playingGrid.placeFlag(position);

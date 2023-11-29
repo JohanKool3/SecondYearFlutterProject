@@ -23,8 +23,8 @@ class GameContentLoader {
         bool isRevealed = _detectIsRevealed(item);
         bool isFlagged = _detectIsFlagged(item);
 
-        outputGrid.contents["($row, $column)"] =
-            GridContent(isMine, "($row, $column)", isFlagged, isRevealed);
+        outputGrid.contents["($column, $row)"] =
+            GridContent(isMine, "($column, $row)", isFlagged, isRevealed);
       }
     }
     outputGrid.setupValues();
@@ -40,11 +40,12 @@ class GameContentLoader {
     List<List<String>> outputGrid = [];
     Grid grid = gameState.grid;
 
-    for (int i = 0; i < grid.dimensions[0]; i++) {
+    for (int yRow = 0; yRow < grid.dimensions[0]; yRow++) {
       List<String> row = [];
 
-      for (int j = 0; j < grid.dimensions[1]; j++) {
-        String squareTag = generateSquareTag(grid.contents["($i, $j)"]!);
+      for (int column = 0; column < grid.dimensions[1]; column++) {
+        String squareTag =
+            generateSquareTag(grid.contents["($column, $yRow)"]!);
         row.add(squareTag);
       }
       outputGrid.add(row);

@@ -67,8 +67,17 @@ class GameStateManager {
   void _debugPrint(GameState state) {
     List<List<String>> gridList = GameContentLoader.saveContents(state);
 
-    for (List<String> row in gridList) {
-      print(row);
+    int width = gridList.length;
+    int height = gridList[0].length;
+
+    for (int row = 0; row < width; row++) {
+      String rowString = "[";
+      for (int column = 0; column < height; column++) {
+        String item = gridList[row][column];
+
+        rowString += item + ",";
+      }
+      print(rowString + "]");
     }
   }
 }
