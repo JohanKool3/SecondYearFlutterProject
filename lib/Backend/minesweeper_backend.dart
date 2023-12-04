@@ -21,6 +21,8 @@ class MinesweeperBackend {
 
   bool isGameWon() => playingGrid.gameIsWon();
 
+  List<int> getDimensions() => playingGrid.dimensions;
+
   void takeUserInput(String position, InputType type) {
     switch (type) {
       case InputType.flag:
