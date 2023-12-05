@@ -38,7 +38,9 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
     for (int i = 0; i < dimensions[0]; i++) {
       for (int j = 0; j < dimensions[1]; j++) {
-        cells.add(CellWidget(50, [i * 50.0, j * 50.0]));
+        CellWidget newWidget = CellWidget(
+            50, [i * 50.0, j * 50.0], backend.playingGrid.contents["($i, $j)"]);
+        cells.add(newWidget);
       }
     }
 
