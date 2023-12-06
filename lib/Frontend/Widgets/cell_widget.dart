@@ -5,12 +5,15 @@ import 'package:flame/input.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
+import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
+import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 
 class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
-  CellWidget(double size, List<double> newPos, this.content)
+  CellWidget(double size, List<double> newPos, this.content, this.backend)
       : super(size: Vector2.all(size), position: Vector2.array(newPos));
 
   GridContent? content;
+  MinesweeperBackend? backend;
   bool selected = false;
   List<Sprite?> sprites = [];
   @override
@@ -40,20 +43,38 @@ class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
       sprite = sprites[3];
     } else if (content!.isRevealed) {
       _reveal();
+      selected = true;
     }
+  }
+
+  @override
+  void update(double dt) {
+    // Update the sprite if the cell has been flagged, or revealed
+    if (content!.isFlagged) {
+      sprite = sprites[3];
+    } else if (content!.isRevealed) {
+      _reveal();
+      selected = true;
+    }
+
+    // Update the sprite if the game is over
+    if (backend!.playingGrid.isGameOver) {
+      _revealMinesOnGameOver();
+    }
+    super.update(dt);
   }
 
   @override
   onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
-    if (selected == true) return;
+    if (_inputAllowed()) return;
     sprite = sprites[1];
   }
 
   @override
   void onHoverExit() {
     // TODO: implement onHoverExit
-    if (selected == true) return;
+    if (_inputAllowed()) return;
     sprite = sprites[0];
     super.onHoverExit();
   }
@@ -61,14 +82,20 @@ class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
   @override
   void onTapDown(TapDownEvent event) {
     // TODO: implement onTapDown
-    if (selected == true) return;
+    if (_inputAllowed()) return;
     sprite = sprites[2];
     super.onTapDown(event);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
-    if (selected == true) return;
+    // Graphical updates
+    if (_inputAllowed()) {
+      backend!.removeSaveState();
+      return;
+    }
+    backend!.takeUserInput(content!.position, InputType.clear);
+
     sprite = sprites[1];
     // Revleal the cell
     super.onTapUp(event);
@@ -86,6 +113,7 @@ class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
 
     _reveal();
     selected = true;
+
     return;
   }
 
@@ -106,4 +134,15 @@ class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
       _ => sprites[13], // Must be a
     };
   }
+
+  void _revealMinesOnGameOver() {
+    if (content!.isMine) {
+      sprite = sprites[4];
+    }
+  }
+
+  bool _inputAllowed() =>
+      selected == true ||
+      backend!.playingGrid.isGameOver ||
+      backend!.playingGrid.gameIsWon();
 }

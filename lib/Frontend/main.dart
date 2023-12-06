@@ -28,6 +28,4 @@ void main() async {
   );
 
   runApp(GameWidget(game: Minesweeper(backend)));
-  backend.saveGameState();
-  Hive.close();
 }

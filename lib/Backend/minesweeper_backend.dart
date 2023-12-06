@@ -32,6 +32,8 @@ class MinesweeperBackend {
         playingGrid.revealSquare(position);
         break;
     }
+    saveGameState();
+    removeSaveState();
   }
 
   void resetGame() {
@@ -45,8 +47,21 @@ class MinesweeperBackend {
       information.setDifficulty(difficulty);
 
   void saveGameState() {
-    // Save the game state to the database
-    database.put(1, stateManager.currentState.toModel());
-    information.stopTimer();
+    // Check if there is already an entry in the database
+    if (database.isEmpty) {
+      // If there is no entry, create a new one
+      database.put(1, stateManager.currentState.toModel());
+    } else {
+      // If there is an entry, update it
+      database.putAt(0, stateManager.currentState.toModel());
+    }
+  }
+
+  void removeSaveState() {
+    // Don't save if the game is over or won
+    if (playingGrid.isGameOver || playingGrid.gameIsWon()) {
+      // Remove entry from database
+      if (database.isNotEmpty) database.deleteAt(0);
+    }
   }
 }
