@@ -43,8 +43,13 @@ class MinesweeperBackend {
     information = GameInformation();
   }
 
-  void setNewDifficulty(Difficulty difficulty) =>
-      information.setDifficulty(difficulty);
+  void setNewDifficulty(Difficulty difficulty) {
+    information.setDifficulty(difficulty);
+    // Set new game state
+    stateManager.newGameStateWithDifficulty(difficulty);
+    // remove entry from database
+    removeSaveState();
+  }
 
   void saveGameState() {
     // Check if there is already an entry in the database
