@@ -3,8 +3,9 @@ import 'package:flame/events.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
+import 'package:flutter_application_1/Frontend/minesweeper.dart';
 
-class CellWidget extends Button {
+class CellWidget extends Button with HasGameRef<Minesweeper> {
   CellWidget(double size, Vector2 newPos, this.content, backend)
       : super("cell", Vector2.all(size), newPos, backend);
 
@@ -62,30 +63,30 @@ class CellWidget extends Button {
   @override
   onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
-    if (_inputAllowed()) return;
+    if (_inputNotAllowed()) return;
     super.onHoverEnter();
   }
 
   @override
   void onHoverExit() {
-    if (_inputAllowed()) return;
+    if (_inputNotAllowed()) return;
     super.onHoverExit();
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    if (_inputAllowed()) return;
+    if (_inputNotAllowed()) return;
     super.onTapDown(event);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     // Graphical updates
-    if (_inputAllowed()) {
+    if (_inputNotAllowed()) {
       backend!.removeSaveState();
       return;
     }
-    backend!.takeUserInput(content!.position, InputType.clear);
+    backend!.takeUserInput(content!.position, game.inputType);
     // Reveal the cell
     super.onTapUp(event);
 
@@ -130,8 +131,9 @@ class CellWidget extends Button {
     }
   }
 
-  bool _inputAllowed() =>
+  bool _inputNotAllowed() =>
       selected == true ||
+      content!.isFlagged ||
       backend!.playingGrid.isGameOver ||
       backend!.playingGrid.gameIsWon();
 }

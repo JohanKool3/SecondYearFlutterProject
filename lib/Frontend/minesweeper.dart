@@ -1,7 +1,9 @@
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
+import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 import 'package:flutter_application_1/Frontend/Managers/button_manager.dart';
 import 'package:flutter_application_1/Frontend/Managers/grid_manager.dart';
@@ -18,6 +20,9 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   // Positional Components
   late Vector2 positionOffset;
   double cellDimensions = 60;
+
+  // Logical Components
+  InputType inputType = InputType.clear;
 
   Minesweeper(this.backend) {
     // Set the position offset
@@ -52,6 +57,24 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     super.render(canvas);
   }
 
+  // Take keyboard input, press a for clear, d for flag
+  @override
+  KeyEventResult onKeyEvent(
+      RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    // TODO: implement onKeyEvent
+
+    if (event is RawKeyDownEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.keyA) {
+        inputType = InputType.clear;
+        // TODO: Graphical update that clear is selected
+      } else if (event.logicalKey == LogicalKeyboardKey.keyD) {
+        inputType = InputType.flag;
+        // TODO: Graphical update that flag is selected
+      }
+    }
+    return super.onKeyEvent(event, keysPressed);
+  }
+
   void generateNewGame(Difficulty newDifficulty) {
     backend.setNewDifficulty(newDifficulty);
 
@@ -64,6 +87,14 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     //Remove all children
 
     generateGameObjects();
+  }
+
+  void toggleInputType() {
+    if (inputType == InputType.clear) {
+      inputType = InputType.flag;
+    } else {
+      inputType = InputType.clear;
+    }
   }
 
   void generateGameObjects() {
