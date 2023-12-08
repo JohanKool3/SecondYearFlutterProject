@@ -82,7 +82,7 @@ class Grid {
     if (contents[position]?.value == 0) {
       // Generate the surrounding squares
       List<String> surroundingSquares =
-          _generateSurroundingSquares(position).toList();
+          generateSurroundingSquares(position).toList();
 
       // Loop through the surrounding squares
       for (String square in surroundingSquares) {
@@ -177,8 +177,7 @@ class Grid {
       String position = content.position;
 
       if (!content.isMine) {
-        for (String surroundingSquare
-            in _generateSurroundingSquares(position)) {
+        for (String surroundingSquare in generateSurroundingSquares(position)) {
           // If the square is invalid, it'll be null (therefore return false)
           if (contents[surroundingSquare]?.isMine ?? false) {
             // Increment the value of the surrounding squares
@@ -189,7 +188,7 @@ class Grid {
     }
   }
 
-  List<String> _generateSurroundingSquares(String position) {
+  List<String> generateSurroundingSquares(String position) {
     List<String> surroundingSquares = [];
     int x = int.parse(position.substring(1, position.indexOf(",")));
     int y = int.parse(
@@ -215,4 +214,10 @@ class Grid {
     }
     return surroundingSquares;
   }
+
+  int getAdjacentFlagCount(String position) =>
+      // Linq esque statement to get the amount of flagged squares
+      generateSurroundingSquares(position)
+          .where((element) => contents[element]?.isFlagged ?? false)
+          .length;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
+import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:flutter_application_1/Backend/Managers/game_information.dart';
 import 'package:flutter_application_1/Backend/Managers/game_state_manager.dart';
@@ -70,6 +71,22 @@ class MinesweeperBackend {
     if (playingGrid.isGameOver || playingGrid.gameIsWon()) {
       // Remove entry from database
       if (database.isNotEmpty) database.deleteAt(0);
+    }
+  }
+
+  void initiateChording(GridContent content) {
+    // Get the surrounding squares
+    List<String> surroundingSquares =
+        playingGrid.generateSurroundingSquares(content.position);
+
+    // Loop through the surrounding squares
+    for (String square in surroundingSquares) {
+      // Check if the square is already revealed or flagged
+      if (!playingGrid.contents[square]!.isRevealed ||
+          !playingGrid.contents[square]!.isFlagged) {
+        // Reveal the square
+        playingGrid.revealSquare(square);
+      }
     }
   }
 }
