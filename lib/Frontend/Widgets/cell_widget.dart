@@ -10,6 +10,7 @@ class CellWidget extends Button {
 
   GridContent? content;
   bool selected = false;
+
   @override
   Future<void> onLoad() async {
     // Add the sprite to the list of sprites
@@ -62,22 +63,18 @@ class CellWidget extends Button {
   onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
     if (_inputAllowed()) return;
-    sprite = sprites[1];
+    super.onHoverEnter();
   }
 
   @override
   void onHoverExit() {
-    // TODO: implement onHoverExit
     if (_inputAllowed()) return;
-    sprite = sprites[0];
     super.onHoverExit();
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    // TODO: implement onTapDown
     if (_inputAllowed()) return;
-    sprite = sprites[2];
     super.onTapDown(event);
   }
 
@@ -89,9 +86,7 @@ class CellWidget extends Button {
       return;
     }
     backend!.takeUserInput(content!.position, InputType.clear);
-
-    sprite = sprites[1];
-    // Revleal the cell
+    // Reveal the cell
     super.onTapUp(event);
 
     // Cannot reveal a flag
