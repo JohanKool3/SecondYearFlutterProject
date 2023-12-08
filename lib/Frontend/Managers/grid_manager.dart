@@ -8,9 +8,15 @@ class GridManager extends PositionComponent {
   Vector2 positionOffset = Vector2.zero();
   double cellDimensions;
 
+  Vector2 bottomLeft = Vector2.zero();
+
   GridManager(this.backend, this.positionOffset, {this.cellDimensions = 50}) {
     /// Position is the top left corner of the grid
     /// Size is the size of the grid
+
+    // Calculate the cell dimensions as if the grid was setup for easy.
+
+    cellDimensions = (9 / backend.getDimensions()[0]) * cellDimensions;
     generate();
   }
 
@@ -30,5 +36,7 @@ class GridManager extends PositionComponent {
         cells.add(newWidget);
       }
     }
+    // For dynamically changing the layout of the GUI
+    bottomLeft = Vector2(xOffset, dimensions[1] * cellDimensions + yOffset);
   }
 }

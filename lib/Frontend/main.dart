@@ -23,8 +23,6 @@ void main() async {
 
   Minesweeper game = Minesweeper(backend);
 
-  game.generateNewGame(Difficulty.medium);
-
   // When in debugging mode, removes the need to keep reloading
   runApp(
     GameWidget(game: kDebugMode ? Minesweeper(backend) : game),
