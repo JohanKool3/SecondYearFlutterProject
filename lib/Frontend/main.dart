@@ -23,7 +23,7 @@ void main() async {
 
   Minesweeper game = Minesweeper(backend);
 
-  game.changeDifficulty(Difficulty.medium);
+  game.generateNewGame(Difficulty.medium);
 
   // When in debugging mode, removes the need to keep reloading
   runApp(

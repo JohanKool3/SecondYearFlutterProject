@@ -9,8 +9,11 @@ import 'package:flutter_application_1/Frontend/Widgets/cell_widget.dart';
 class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   late MinesweeperBackend backend;
   late GridManager grid;
+  Vector2 positionOffset = Vector2(10, 10);
+  double cellDimensions = 50;
+
   Minesweeper(this.backend) {
-    grid = GridManager(backend);
+    grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
   }
 
   @override
@@ -33,7 +36,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     super.render(canvas);
   }
 
-  void changeDifficulty(Difficulty newDifficulty) {
+  void generateNewGame(Difficulty newDifficulty) {
     backend.setNewDifficulty(newDifficulty);
 
     // Remove all children
@@ -41,7 +44,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
       if (child is CellWidget) remove(child);
     }
 
-    grid = GridManager(backend);
+    grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
     //Remove all children
 
     generateGameObjects();
