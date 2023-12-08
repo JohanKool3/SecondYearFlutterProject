@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 import 'package:flutter_application_1/Frontend/Managers/button_manager.dart';
 import 'package:flutter_application_1/Frontend/Managers/grid_manager.dart';
+import 'package:flutter_application_1/Frontend/Templates/static_element.dart';
 import 'package:flutter_application_1/Frontend/Widgets/cell_widget.dart';
 
 class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
@@ -15,10 +16,13 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   late ButtonManager buttons;
 
   // Positional Components
-  Vector2 positionOffset = Vector2(10, 10);
-  double cellDimensions = 70;
+  late Vector2 positionOffset;
+  double cellDimensions = 60;
 
   Minesweeper(this.backend) {
+    // Set the position offset
+    positionOffset = Vector2(0, cellDimensions);
+
     // Playing grid
     grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
 
@@ -67,5 +71,9 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     // Create an instance of the Components of the game
     addAll(grid.cells);
     addAll(buttons.buttons);
+    addAll([
+      StaticElement("title_card", Vector2(cellDimensions * 9, cellDimensions),
+          Vector2(0, 0))
+    ]);
   }
 }
