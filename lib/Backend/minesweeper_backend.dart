@@ -37,7 +37,6 @@ class MinesweeperBackend {
         break;
     }
     saveGameState();
-    removeSaveState();
   }
 
   void resetGame() {

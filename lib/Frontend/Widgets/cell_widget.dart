@@ -2,7 +2,6 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
-import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
 
 class CellWidget extends Button with HasGameRef<Minesweeper> {
@@ -81,11 +80,12 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
 
   @override
   void onTapUp(TapUpEvent event) {
-    // Graphical updates
-    if (_inputNotAllowed()) {
+    // Removes the save state if the game is over or won
+    if (backend!.playingGrid.isGameOver || backend!.playingGrid.gameIsWon()) {
       backend!.removeSaveState();
       return;
     }
+
     backend!.takeUserInput(content!.position, game.inputType);
     // Reveal the cell
     super.onTapUp(event);
@@ -131,9 +131,5 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
     }
   }
 
-  bool _inputNotAllowed() =>
-      selected == true ||
-      content!.isFlagged ||
-      backend!.playingGrid.isGameOver ||
-      backend!.playingGrid.gameIsWon();
+  bool _inputNotAllowed() => selected == true || content!.isFlagged;
 }
