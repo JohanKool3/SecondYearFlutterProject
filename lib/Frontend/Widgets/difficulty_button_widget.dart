@@ -3,29 +3,36 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
-import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
+import 'package:flutter_application_1/Frontend/Templates/button.dart';
+import 'package:flutter_application_1/Frontend/minesweeper.dart';
 
-class DifficultyButtonWidget extends SpriteComponent
-    with HoverCallbacks, TapCallbacks {
+class DifficultyButtonWidget extends Button with HasGameReference<Minesweeper> {
   DifficultyButtonWidget(
-      double size, List<double> newPos, this.backend, this.difficulty)
-      : super(size: Vector2.all(size), position: Vector2.array(newPos));
+      Vector2 size, List<double> newPos, backend, this.difficulty)
+      : super(size, newPos, backend);
 
-  MinesweeperBackend? backend;
   Difficulty? difficulty;
   List<Sprite> sprites = [];
 
   @override
   FutureOr<void> onLoad() async {
-    // Loading sprites through a switch expression
-
-    _loadSprites(switch (difficulty) {
+    // Fetch the name of the difficulty for import
+    String difficultyName = (switch (difficulty) {
       Difficulty.easy => "easy",
       Difficulty.medium => "medium",
       Difficulty.hard => "hard",
       _ => throw Exception("Invalid difficulty"),
     });
 
+    // Load the correct sprites
+    sprites = [
+      await Sprite.load("${difficultyName}_button.png"),
+      await Sprite.load("${difficultyName}_button_hover.png"),
+      await Sprite.load("${difficultyName}_button_down.png"),
+    ];
+
+    // Set the sprite to the normal sprite
+    sprite = sprites[0];
     return super.onLoad();
   }
 
@@ -52,14 +59,7 @@ class DifficultyButtonWidget extends SpriteComponent
     // Change to the normal sprite
     // Change the difficulty to the difficulty of this button
     sprite = sprites[0];
+    game.generateNewGame(difficulty!);
     super.onTapUp(event);
-  }
-
-  void _loadSprites(String difficultyName) async {
-    sprites = [
-      await Sprite.load("${difficultyName}_button.png"),
-      await Sprite.load("${difficultyName}_button_hover.png"),
-      await Sprite.load("${difficultyName}_button_down.png"),
-    ];
   }
 }

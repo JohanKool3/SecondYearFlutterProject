@@ -1,19 +1,14 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flutter/material.dart';
-import 'package:flame/input.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
-import 'package:flutter_application_1/Frontend/minesweeper.dart';
-import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
+import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 
-class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
-  CellWidget(double size, List<double> newPos, this.content, this.backend)
-      : super(size: Vector2.all(size), position: Vector2.array(newPos));
+class CellWidget extends Button {
+  CellWidget(double size, List<double> newPos, this.content, backend)
+      : super(Vector2.all(size), newPos, backend);
 
   GridContent? content;
-  MinesweeperBackend? backend;
   bool selected = false;
   List<Sprite?> sprites = [];
   @override
@@ -131,7 +126,7 @@ class CellWidget extends SpriteComponent with HoverCallbacks, TapCallbacks {
       6 => sprites[10],
       7 => sprites[11],
       8 => sprites[12],
-      _ => sprites[13], // Must be a
+      _ => sprites[13], // Must be an empty cell
     };
   }
 
