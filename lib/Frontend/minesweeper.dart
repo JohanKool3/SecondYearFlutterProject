@@ -12,7 +12,6 @@ import 'package:flutter_application_1/Frontend/Widgets/cell_widget.dart';
 
 class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   late MinesweeperBackend backend;
-
   // Graphical Components
   late GridManager grid;
   late ButtonManager buttons;
@@ -20,11 +19,14 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   // Positional Components
   late Vector2 positionOffset;
   double cellDimensions = 60;
+  late Color currentColor;
 
   // Logical Components
   InputType inputType = InputType.clear;
 
   Minesweeper(this.backend) {
+    // Set the initial color
+    currentColor = Color.fromARGB(255, 17, 204, 73);
     // Set the position offset
     positionOffset = Vector2(0, cellDimensions);
 
@@ -38,7 +40,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   }
 
   @override
-  Color backgroundColor() => const Color.fromARGB(255, 17, 204, 73);
+  Color backgroundColor() => currentColor;
 
   @override
   Future<void> onLoad() async {
@@ -49,6 +51,9 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   void update(double dt) {
     // Update game logic here
     super.update(dt);
+    if (backend.isGameWon()) {
+      _displayWonGame();
+    }
   }
 
   @override
@@ -61,8 +66,6 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   @override
   KeyEventResult onKeyEvent(
       RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    // TODO: implement onKeyEvent
-
     if (event is RawKeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.keyA) {
         inputType = InputType.clear;
@@ -80,11 +83,10 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
     // Remove all children
     for (var child in children) {
-      if (child is CellWidget) remove(child);
+      remove(child);
     }
 
     grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
-    //Remove all children
 
     generateGameObjects();
   }
@@ -106,5 +108,21 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
       StaticElement("title_card", Vector2(cellDimensions * 9, cellDimensions),
           Vector2(0, 0))
     ]);
+  }
+
+  void _displayWonGame() {
+    // Remove the grid to show the game won screen
+
+    for (var child in children) {
+      if (child is CellWidget) remove(child);
+    }
+
+    add(StaticElement(
+        "game_won",
+        Vector2(cellDimensions * 9, cellDimensions * 4),
+        Vector2(positionOffset.x, cellDimensions * 4.5)));
+
+    // Remove save state
+    backend.removeSaveState();
   }
 }

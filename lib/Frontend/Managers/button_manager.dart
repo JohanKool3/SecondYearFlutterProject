@@ -36,7 +36,10 @@ class ButtonManager extends PositionComponent {
 
       // Resart button
       UtilityButtonWidget(Vector2(buttonSize.x / 2, buttonSize.y),
-          positionOffset + difference * 3, backend, "restart")
+          positionOffset + difference * 3, backend, "restart"),
+
+      UtilityButtonWidget(Vector2(buttonSize.x / 2, buttonSize.y),
+          positionOffset + difference * 4, backend, "indicator")
     ];
   }
 }

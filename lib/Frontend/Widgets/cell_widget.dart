@@ -29,7 +29,8 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
       await Sprite.load("revealed_6.png"),
       await Sprite.load("revealed_7.png"),
       await Sprite.load("revealed_8.png"),
-      await Sprite.load("revealed_field.png")
+      await Sprite.load("revealed_field.png"),
+      await Sprite.load("cell_flagged_incorrect.png")
     ];
 
     // Set the sprite to the first sprite in the list
@@ -87,34 +88,38 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
       return;
     }
 
-    // If the cell is already selected or flagged, do not allow input
-    if (_inputNotAllowed()) return;
+    // If the cell is already selected or flagged (with wrong input type), do not allow input
+    else if (_inputNotAllowed()) {
+      return;
+    }
 
     // If the cell is revealed, and the input type is clear, and the chording is possible, then chord
-    if (_chordingPossible()) {
+    else if (_chordingPossible()) {
       backend!.initiateChording(content!);
       return;
     }
 
-    backend!.takeUserInput(content!.position, game.inputType);
-    // Reveal the cell
-    super.onTapUp(event);
-
-    // Cannot reveal a flag
-    if (content!.isFlagged) {
+    // Toggle flag for the cell
+    else if (game.inputType == InputType.flag) {
+      sprite = sprites[0];
+      backend!.takeUserInput(content!.position, game.inputType);
       return;
     }
 
-    if (content!.isMine) {
+    // User has hit a mine, game is over
+    else if (content!.isMine) {
       sprite = sprites[4];
       selected = true;
+      backend!.takeUserInput(content!.position, game.inputType);
+      return;
+    } else {
+      // Passed through all other possible outcomes, must be a normal cell clear
+      _reveal();
+      backend!.takeUserInput(content!.position, game.inputType);
+      selected = true;
+
       return;
     }
-
-    _reveal();
-    selected = true;
-
-    return;
   }
 
   void assignContent(GridContent contentIn) {
@@ -136,13 +141,22 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
   }
 
   void _revealMinesOnGameOver() {
-    if (content!.isMine) {
+    if (content!.isMine && !content!.isFlagged) {
       sprite = sprites[4];
+    }
+
+    if (content!.isFlagged && !content!.isMine) {
+      sprite = sprites[14];
     }
   }
 
   bool _inputNotAllowed() =>
-      (selected == true || content!.isFlagged) && !_chordingPossible();
+      (selected == true || // Cell is already selected
+          content!.isFlagged &&
+              game.inputType ==
+                  InputType
+                      .clear) && // Cell is flagged and the input type is not flag
+      !_chordingPossible();
 
   bool _chordingPossible() =>
       game.inputType == InputType.clear && // Currently Clearing
