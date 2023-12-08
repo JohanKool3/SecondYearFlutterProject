@@ -18,28 +18,20 @@ class ButtonManager extends PositionComponent {
 
   void _generate() {
     // Generate the buttons
+    Vector2 difference = Vector2(buttonSize.x + buttonSpacing, 0);
 
     buttons = [
       // Easy button
-      DifficultyButtonWidget(buttonSize, [positionOffset.x, positionOffset.y],
-          backend, Difficulty.easy),
+      DifficultyButtonWidget(
+          buttonSize, positionOffset, backend, Difficulty.easy),
 
       // Medium button
       DifficultyButtonWidget(
-          buttonSize,
-          [positionOffset.x + buttonSize.x + buttonSpacing, positionOffset.y],
-          backend,
-          Difficulty.medium),
+          buttonSize, positionOffset + difference, backend, Difficulty.medium),
 
       // Hard button
       DifficultyButtonWidget(
-          buttonSize,
-          [
-            positionOffset.x + 2 * buttonSize.x + 2 * buttonSpacing,
-            positionOffset.y
-          ],
-          backend,
-          Difficulty.hard)
+          buttonSize, positionOffset + difference * 2, backend, Difficulty.hard)
     ];
   }
 }

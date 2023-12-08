@@ -22,21 +22,17 @@ class GridManager extends PositionComponent {
 
   void generate() {
     List<int> dimensions = backend.getDimensions();
-
-    double xOffset = positionOffset.x;
-    double yOffset = positionOffset.y;
-
     for (int i = 0; i < dimensions[0]; i++) {
       for (int j = 0; j < dimensions[1]; j++) {
-        CellWidget newWidget = CellWidget(
-            cellDimensions,
-            [i * cellDimensions + xOffset, j * cellDimensions + yOffset],
-            backend.playingGrid.contents["($i, $j)"],
-            backend);
+        Vector2 position = Vector2(i * cellDimensions + positionOffset[0],
+            j * cellDimensions + positionOffset[1]);
+
+        CellWidget newWidget = CellWidget(cellDimensions, position,
+            backend.playingGrid.contents["($i, $j)"], backend);
         cells.add(newWidget);
       }
     }
     // For dynamically changing the layout of the GUI
-    bottomLeft = Vector2(xOffset, dimensions[1] * cellDimensions + yOffset);
+    bottomLeft = Vector2(0, positionOffset[1] + dimensions[1] * cellDimensions);
   }
 }

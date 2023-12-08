@@ -5,12 +5,11 @@ import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 
 class CellWidget extends Button {
-  CellWidget(double size, List<double> newPos, this.content, backend)
-      : super(Vector2.all(size), newPos, backend);
+  CellWidget(double size, Vector2 newPos, this.content, backend)
+      : super("cell", Vector2.all(size), newPos, backend);
 
   GridContent? content;
   bool selected = false;
-  List<Sprite?> sprites = [];
   @override
   Future<void> onLoad() async {
     // Add the sprite to the list of sprites
