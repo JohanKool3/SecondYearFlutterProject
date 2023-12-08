@@ -39,7 +39,7 @@ class GameStateManager {
       GameStateModel model = database.get(1);
 
       // Map the difficulty
-      Difficulty difficulty = Difficulty.values[model.difficultyId];
+      difficulty = Difficulty.values[model.difficultyId];
       Grid grid = GameContentLoader.loadContents(difficulty, model.grid);
 
       // Convert to game state

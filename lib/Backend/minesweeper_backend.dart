@@ -14,6 +14,9 @@ class MinesweeperBackend {
   MinesweeperBackend(Box databaseIn) {
     database = databaseIn;
     stateManager = GameStateManager(Difficulty.easy, database: database);
+
+    // Make sure the difficulty is set correctly after database loading
+    information.difficulty = stateManager.difficulty;
   }
 
   // Returns if the game is running
