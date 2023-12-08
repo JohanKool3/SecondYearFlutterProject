@@ -81,7 +81,7 @@ class MinesweeperBackend {
     // Loop through the surrounding squares
     for (String square in surroundingSquares) {
       // Check if the square is already revealed or flagged
-      if (!playingGrid.contents[square]!.isRevealed ||
+      if (!playingGrid.contents[square]!.isRevealed &&
           !playingGrid.contents[square]!.isFlagged) {
         // Reveal the square
         playingGrid.revealSquare(square);

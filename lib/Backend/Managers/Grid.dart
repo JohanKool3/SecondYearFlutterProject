@@ -215,9 +215,14 @@ class Grid {
     return surroundingSquares;
   }
 
-  int getAdjacentFlagCount(String position) =>
-      // Linq esque statement to get the amount of flagged squares
-      generateSurroundingSquares(position)
-          .where((element) => contents[element]?.isFlagged ?? false)
-          .length;
+  int getAdjacentFlagCount(String position) {
+    int flagCount = 0;
+
+    for (String square in generateSurroundingSquares(position)) {
+      if (contents[square]?.isFlagged ?? false) {
+        flagCount++;
+      }
+    }
+    return flagCount;
+  }
 }

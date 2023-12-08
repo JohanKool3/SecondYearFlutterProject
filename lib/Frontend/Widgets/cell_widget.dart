@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
@@ -86,6 +87,15 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
       return;
     }
 
+    // If the cell is already selected or flagged, do not allow input
+    if (_inputNotAllowed()) return;
+
+    // If the cell is revealed, and the input type is clear, and the chording is possible, then chord
+    if (_chordingPossible()) {
+      backend!.initiateChording(content!);
+      return;
+    }
+
     backend!.takeUserInput(content!.position, game.inputType);
     // Reveal the cell
     super.onTapUp(event);
@@ -131,5 +141,12 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
     }
   }
 
-  bool _inputNotAllowed() => selected == true || content!.isFlagged;
+  bool _inputNotAllowed() =>
+      (selected == true || content!.isFlagged) && !_chordingPossible();
+
+  bool _chordingPossible() =>
+      game.inputType == InputType.clear && // Currently Clearing
+      content!.isRevealed && // The square is revealed
+      backend!.playingGrid.getAdjacentFlagCount(content!.position) ==
+          content!.value; // There are sufficient flags around the square
 }
