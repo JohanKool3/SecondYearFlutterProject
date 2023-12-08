@@ -23,6 +23,8 @@ class DifficultyButtonWidget extends Button with HasGameReference<Minesweeper> {
   void onTapUp(TapUpEvent event) {
     // Change the difficulty to the difficulty of this button
     game.generateNewGame(difficulty!);
+    game.backend
+        .saveGameState(); // Quality of life, when generation then leave immediately
     super.onTapUp(event);
   }
 }
