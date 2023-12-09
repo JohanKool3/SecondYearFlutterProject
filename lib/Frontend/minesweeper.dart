@@ -18,6 +18,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   late GridManager grid;
   late ButtonManager buttons;
 
+  bool displayedWonGame = false;
+
   // Positional Components
   late Vector2 positionOffset;
   double cellDimensions = 57;
@@ -49,7 +51,11 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     // Update game logic here
     super.update(dt);
     if (backend.isGameWon()) {
-      _displayWonGame();
+      backend.stopTimer();
+
+      if (!displayedWonGame) {
+        _displayWonGame();
+      }
     }
   }
 
@@ -79,6 +85,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
   void generateNewGame(Difficulty newDifficulty) {
     backend.setNewDifficulty(newDifficulty);
+    displayedWonGame = false;
     // Synchronize the time to be 0
     backend.setTime(0);
 
@@ -121,6 +128,10 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   void _displayWonGame() {
     // Remove the grid to show the game won screen
 
+    if (!displayedWonGame) {
+      displayedWonGame = true;
+    }
+
     for (var child in children) {
       if (child is CellWidget) remove(child);
     }
@@ -129,8 +140,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
         "game_won",
         Vector2(cellDimensions * 9, cellDimensions * 4),
         Vector2(positionOffset.x, cellDimensions * 4.5)));
-
-    backend.stopTimer();
+    backend.printGameWon();
 
     // Remove save state
     backend.removeSaveState();

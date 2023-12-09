@@ -112,6 +112,18 @@ class MinesweeperBackend {
     information.startTimer();
   }
 
+  void printGameWon() {
+    int time = information.time;
+
+    String difficulty = switch (stateManager.difficulty) {
+      Difficulty.easy => "Easy",
+      Difficulty.medium => "Medium",
+      Difficulty.hard => "Hard",
+    };
+
+    print("You won the game in $time seconds on $difficulty!");
+  }
+
   void initiateChording(GridContent content) {
     // Get the surrounding squares
     List<String> surroundingSquares =
