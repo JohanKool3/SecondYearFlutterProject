@@ -71,6 +71,10 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
         inputType = InputType.clear;
       } else if (event.logicalKey == LogicalKeyboardKey.keyD) {
         inputType = InputType.flag;
+
+        //Restart Game
+      } else if (event.logicalKey == LogicalKeyboardKey.keyR) {
+        generateNewGame(backend.information.difficulty);
       }
     }
     return super.onKeyEvent(event, keysPressed);
