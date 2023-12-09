@@ -44,7 +44,6 @@ class GameStateManager {
 
       // Convert to game state
       GameState state = GameState(difficulty, model.time, grid: grid);
-
       // Set game state
       currentState = state;
 

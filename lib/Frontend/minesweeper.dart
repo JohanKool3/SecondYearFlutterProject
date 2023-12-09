@@ -82,6 +82,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
   void generateNewGame(Difficulty newDifficulty) {
     backend.setNewDifficulty(newDifficulty);
+    // Synchronize the time to be 0
+    backend.setTime(0);
 
     // Remove all children
     for (var child in children) {

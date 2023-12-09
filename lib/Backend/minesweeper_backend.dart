@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
@@ -15,9 +16,12 @@ class MinesweeperBackend {
 
   MinesweeperBackend(Box databaseIn) {
     database = databaseIn;
-    stateManager = GameStateManager(Difficulty.easy, database: database);
+    stateManager = GameStateManager(Difficulty.easy,
+        database:
+            database); // If it is production (not testing) add backend object
 
     // Make sure the difficulty is set correctly after database loading
+    setTime(stateManager.currentState.time); // Synchronize time
     information.difficulty = stateManager.difficulty;
   }
 
@@ -58,12 +62,15 @@ class MinesweeperBackend {
 
   void saveGameState() {
     // Check if there is already an entry in the database
+    setTime(information.time);
+
+    GameStateModel? model = stateManager.currentState.toModel();
     if (database.isEmpty) {
       // If there is no entry, create a new one
-      database.put(1, stateManager.currentState.toModel());
+      database.put(1, model);
     } else {
       // If there is an entry, update it
-      database.putAt(0, stateManager.currentState.toModel());
+      database.putAt(0, model);
     }
   }
 
@@ -73,6 +80,11 @@ class MinesweeperBackend {
       // Remove entry from database
       if (database.isNotEmpty) database.deleteAt(0);
     }
+  }
+
+  void setTime(int time) {
+    information.time = time;
+    stateManager.currentState.time = time;
   }
 
   void initiateChording(GridContent content) {
