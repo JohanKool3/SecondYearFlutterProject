@@ -34,6 +34,6 @@ class FlagAmountWidget extends TextBoxComponent {
         deployedFlags < 10 ? "0$deployedFlags" : deployedFlags.toString();
 
     // Set the text to the correct format
-    text = "$flagAmountString/${mineAmount.toString()}";
+    text = "Flags: $flagAmountString/${mineAmount.toString()}";
   }
 }

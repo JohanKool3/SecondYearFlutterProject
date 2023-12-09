@@ -25,6 +25,7 @@ class MinesweeperBackend {
     setTime(stateManager.currentState.time); // Synchronize time
     // Determine the amount of flags and add to information object
     information.difficulty = stateManager.difficulty;
+    information.deployedFlags = playingGrid.getFlagAmount();
   }
 
   // Returns if the game is running
@@ -63,6 +64,7 @@ class MinesweeperBackend {
     stateManager.newGameState();
     // Set game information to the initial values
     information = GameInformation();
+    information.deployedFlags = 0;
   }
 
   void setNewDifficulty(Difficulty difficulty) {
@@ -72,6 +74,7 @@ class MinesweeperBackend {
     stateManager.newGameStateWithDifficulty(difficulty);
     // remove entry from database
     removeSaveState();
+    information.deployedFlags = 0;
   }
 
   void saveGameState() {

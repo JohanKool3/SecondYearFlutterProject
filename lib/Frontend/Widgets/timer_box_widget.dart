@@ -29,6 +29,6 @@ class TimerBoxWidget extends TextBoxComponent {
     String secondsString = seconds < 10 ? "0$seconds" : seconds.toString();
 
     // Set the text to the correct format
-    text = "$minutesString:$secondsString";
+    text = "Time: $minutesString:$secondsString";
   }
 }

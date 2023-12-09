@@ -225,4 +225,16 @@ class Grid {
     }
     return flagCount;
   }
+
+  int getFlagAmount() {
+    int flagAmount = 0;
+
+    for (GridContent item in contents.values) {
+      if (item.isFlagged) {
+        flagAmount++;
+      }
+    }
+
+    return flagAmount;
+  }
 }
