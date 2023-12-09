@@ -35,6 +35,14 @@ class IndicatorButtonWidget extends Button with HasGameRef<Minesweeper> {
 
   @override
   void onTapUp(TapUpEvent event) {
-    // Override to do nothing
+    _toggleInput();
+  }
+
+  void _toggleInput() {
+    if (game.inputType == InputType.flag) {
+      game.inputType = InputType.clear;
+    } else {
+      game.inputType = InputType.flag;
+    }
   }
 }
