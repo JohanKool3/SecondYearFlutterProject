@@ -9,25 +9,24 @@ import 'package:flutter_application_1/Frontend/Managers/button_manager.dart';
 import 'package:flutter_application_1/Frontend/Managers/grid_manager.dart';
 import 'package:flutter_application_1/Frontend/Templates/static_element.dart';
 import 'package:flutter_application_1/Frontend/Widgets/cell_widget.dart';
+import 'package:flutter_application_1/Frontend/Widgets/timer_box_widget.dart';
 
 class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   late MinesweeperBackend backend;
   // Graphical Components
   late GridManager grid;
   late ButtonManager buttons;
-  TextPaint textPaint =
-      TextPaint(style: const TextStyle(color: Colors.black, fontSize: 20));
 
   // Positional Components
   late Vector2 positionOffset;
-  double cellDimensions = 60;
+  double cellDimensions = 57;
   Color currentColor = const Color.fromARGB(255, 17, 204, 73);
 
   // Logical Components
   InputType inputType = InputType.clear;
 
   Minesweeper(this.backend) {
-    positionOffset = Vector2(0, cellDimensions);
+    positionOffset = Vector2(0, cellDimensions * 2);
 
     //Manager setup
     grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
@@ -57,9 +56,6 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   void render(Canvas canvas) {
     // Render game graphics here
     super.render(canvas);
-
-    textPaint.render(canvas, backend.information.time.toString(),
-        Vector2(cellDimensions * 9, cellDimensions));
   }
 
   // Take keyboard input, press a for clear, d for flag
@@ -111,6 +107,10 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     addAll([
       StaticElement("title_card", Vector2(cellDimensions * 9, cellDimensions),
           Vector2(0, 0))
+    ]);
+    addAll([
+      TimerBoxWidget(Vector2(cellDimensions * 6, cellDimensions),
+          Vector2(cellDimensions * 3, cellDimensions), backend)
     ]);
   }
 
