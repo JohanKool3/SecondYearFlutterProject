@@ -90,6 +90,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
 
     generateGameObjects();
+    backend.startTimer();
   }
 
   void toggleInputType() {
@@ -128,6 +129,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
         "game_won",
         Vector2(cellDimensions * 9, cellDimensions * 4),
         Vector2(positionOffset.x, cellDimensions * 4.5)));
+
+    backend.stopTimer();
 
     // Remove save state
     backend.removeSaveState();

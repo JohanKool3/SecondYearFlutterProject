@@ -104,6 +104,14 @@ class MinesweeperBackend {
     stateManager.currentState.time = time;
   }
 
+  void stopTimer() {
+    information.stopTimer();
+  }
+
+  void startTimer() {
+    information.startTimer();
+  }
+
   void initiateChording(GridContent content) {
     // Get the surrounding squares
     List<String> surroundingSquares =

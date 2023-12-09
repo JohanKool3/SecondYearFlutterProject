@@ -17,9 +17,7 @@ class GameInformation {
   int get height => dimensions[1];
 
   GameInformation() {
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      time++;
-    });
+    startTimer();
   }
 
   void setDifficulty(Difficulty newDifficulty) {
@@ -56,6 +54,12 @@ class GameInformation {
 
   void stopTimer() {
     timer?.cancel();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      time++;
+    });
   }
 
   void resetTime() {

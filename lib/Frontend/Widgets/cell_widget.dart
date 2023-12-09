@@ -154,6 +154,9 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
     if (content!.isFlagged && !content!.isMine) {
       sprite = sprites[14];
     }
+
+    // Stop the timer on game over
+    backend!.stopTimer();
   }
 
   bool _inputNotAllowed() =>
