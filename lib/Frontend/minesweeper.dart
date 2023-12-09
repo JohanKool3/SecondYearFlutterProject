@@ -9,6 +9,7 @@ import 'package:flutter_application_1/Frontend/Managers/button_manager.dart';
 import 'package:flutter_application_1/Frontend/Managers/grid_manager.dart';
 import 'package:flutter_application_1/Frontend/Templates/static_element.dart';
 import 'package:flutter_application_1/Frontend/Widgets/cell_widget.dart';
+import 'package:flutter_application_1/Frontend/Widgets/flag_amount_widget.dart';
 import 'package:flutter_application_1/Frontend/Widgets/timer_box_widget.dart';
 
 class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
@@ -110,6 +111,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     ]);
     addAll([
       TimerBoxWidget(Vector2(cellDimensions * 6, cellDimensions),
+          Vector2(cellDimensions * 3, cellDimensions), backend),
+      FlagAmountWidget(Vector2(cellDimensions * 3, cellDimensions),
           Vector2(cellDimensions * 3, cellDimensions), backend)
     ]);
   }
