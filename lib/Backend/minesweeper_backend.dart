@@ -1,3 +1,4 @@
+import 'package:flame/game.dart';
 import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
@@ -22,6 +23,7 @@ class MinesweeperBackend {
 
     // Make sure the difficulty is set correctly after database loading
     setTime(stateManager.currentState.time); // Synchronize time
+    // Determine the amount of flags and add to information object
     information.difficulty = stateManager.difficulty;
   }
 
@@ -35,7 +37,19 @@ class MinesweeperBackend {
   void takeUserInput(String position, InputType type) {
     switch (type) {
       case InputType.flag:
+        // Check to see if there is already the max amount of flags
+        if (!playingGrid.contents[position]!.isFlagged &&
+            (information.deployedFlags >= information.flagsToPlace)) {
+          return;
+        }
+        // Update grid
         playingGrid.placeFlag(position);
+        // Update game information
+        if (playingGrid.contents[position]!.isFlagged) {
+          information.deployFlag();
+        } else {
+          information.removeFlag();
+        }
         break;
       case InputType.clear:
         playingGrid.revealSquare(position);

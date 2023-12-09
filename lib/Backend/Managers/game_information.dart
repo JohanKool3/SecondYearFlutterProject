@@ -42,13 +42,17 @@ class GameInformation {
     }
   }
 
-  void deployFlag() => (deployedFlags < flagsToPlace)
-      ? deployedFlags++
-      : throw Exception("Too many flags");
+  void deployFlag() {
+    if (deployedFlags < flagsToPlace) {
+      deployedFlags++;
+    }
+  }
 
-  void removeFlag() => (deployedFlags > 0)
-      ? deployedFlags--
-      : throw Exception("No flags Deployed");
+  void removeFlag() {
+    if (deployedFlags > 0) {
+      deployedFlags--;
+    }
+  }
 
   void stopTimer() {
     timer?.cancel();

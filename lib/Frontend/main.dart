@@ -26,6 +26,4 @@ void main() async {
   runApp(
     GameWidget(game: kDebugMode ? Minesweeper(backend) : game),
   );
-
-  runApp(GameWidget(game: Minesweeper(backend)));
 }

@@ -101,6 +101,12 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
 
     // Toggle flag for the cell
     else if (game.inputType == InputType.flag) {
+      // Check if the user has placed all the flags and is trying to add flags
+      if (!content!.isFlagged &&
+          (backend!.information.deployedFlags >=
+              backend!.information.flagsToPlace)) {
+        return;
+      }
       sprite = sprites[0];
       backend!.takeUserInput(content!.position, game.inputType);
       return;
