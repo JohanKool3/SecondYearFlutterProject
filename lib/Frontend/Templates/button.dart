@@ -24,18 +24,21 @@ class Button extends SpriteComponent with HoverCallbacks, TapCallbacks {
   @override
   void onHoverEnter() async {
     sprite = sprites[1];
+    super.onHoverEnter();
   }
 
   @override
   void onHoverExit() async {
     // Change to the normal sprite
     sprite = sprites[0];
+    super.onHoverExit();
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     // Change to the normal sprite
     sprite = sprites[0];
+    super.onTapUp(event);
   }
 
   @override
