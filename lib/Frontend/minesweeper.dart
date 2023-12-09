@@ -15,25 +15,22 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   // Graphical Components
   late GridManager grid;
   late ButtonManager buttons;
+  TextPaint textPaint =
+      TextPaint(style: const TextStyle(color: Colors.black, fontSize: 20));
 
   // Positional Components
   late Vector2 positionOffset;
   double cellDimensions = 60;
-  late Color currentColor;
+  Color currentColor = const Color.fromARGB(255, 17, 204, 73);
 
   // Logical Components
   InputType inputType = InputType.clear;
 
   Minesweeper(this.backend) {
-    // Set the initial color
-    currentColor = Color.fromARGB(255, 17, 204, 73);
-    // Set the position offset
     positionOffset = Vector2(0, cellDimensions);
 
-    // Playing grid
+    //Manager setup
     grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
-
-    // Selecting difficulty buttons
     buttons = ButtonManager(backend, grid.bottomLeft,
         Vector2(cellDimensions * 1.5, cellDimensions / 2),
         buttonSpacing: 10);
@@ -60,6 +57,9 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   void render(Canvas canvas) {
     // Render game graphics here
     super.render(canvas);
+
+    textPaint.render(canvas, backend.information.time.toString(),
+        Vector2(cellDimensions * 9, cellDimensions));
   }
 
   // Take keyboard input, press a for clear, d for flag
@@ -69,10 +69,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     if (event is RawKeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.keyA) {
         inputType = InputType.clear;
-        // TODO: Graphical update that clear is selected
       } else if (event.logicalKey == LogicalKeyboardKey.keyD) {
         inputType = InputType.flag;
-        // TODO: Graphical update that flag is selected
       }
     }
     return super.onKeyEvent(event, keysPressed);

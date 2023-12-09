@@ -49,11 +49,6 @@ class UtilityButtonWidget extends Button with HasGameReference<Minesweeper> {
 
       case "flag":
         // Change the input type to flag
-        if (game.inputType == InputType.flag) {
-          sprite = sprites[1];
-        } else {
-          sprite = sprites[0];
-        }
         break;
       default:
         throw Exception("Invalid utility");

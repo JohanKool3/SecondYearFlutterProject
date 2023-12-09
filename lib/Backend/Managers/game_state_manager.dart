@@ -50,7 +50,7 @@ class GameStateManager {
 
       // Delete entry from database
       database.delete(1);
-      _debugPrint(state);
+      // _debugPrint(state);
       return true;
       // No save state has been found, return false
     } catch (e) {
