@@ -12,12 +12,14 @@ import 'package:flutter_application_1/Frontend/Templates/static_element.dart';
 import 'package:flutter_application_1/Frontend/Widgets/cell_widget.dart';
 import 'package:flutter_application_1/Frontend/Widgets/flag_amount_widget.dart';
 import 'package:flutter_application_1/Frontend/Widgets/timer_box_widget.dart';
+import 'package:window_manager/window_manager.dart';
 
 class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   late MinesweeperBackend backend;
   // Graphical Components
   late GridManager grid;
   late ButtonManager buttons;
+  WindowManager wm = WindowManager.instance;
 
   bool displayedWonGame = false;
 
@@ -30,6 +32,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   InputType inputType = InputType.clear;
 
   Minesweeper(this.backend) {
+    //Setup of the window
+    wm.setAspectRatio(1.0); // Set aspect ratio
     positionOffset = Vector2(0, cellDimensions * 2);
 
     //Manager setup
