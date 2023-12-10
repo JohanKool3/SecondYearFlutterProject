@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
+import 'package:flutter_application_1/Frontend/Managers/cell_input_manager.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
 
@@ -10,8 +11,10 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
       : super("cell", Vector2.all(size), newPos, backend);
 
   GridContent? content;
+  // When the cell has been selected, it cannot be selected again
   bool selected = false;
-
+  //  Purely for making interaction easier (when the player moves their mouse on the cell, still counts as an input)
+  bool cellPressed = false;
   @override
   Future<void> onLoad() async {
     // Add the sprite to the list of sprites
@@ -64,37 +67,33 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
   @override
   onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
-    if (_inputNotAllowed()) return;
+    if (CellInputManager.inputNotAllowed(this)) return;
     super.onHoverEnter();
   }
 
   @override
   void onHoverExit() {
-    if (_inputNotAllowed()) return;
+    if (CellInputManager.inputNotAllowed(this)) return;
     super.onHoverExit();
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    if (_inputNotAllowed()) return;
+    if (CellInputManager.inputNotAllowed(this)) return;
+    cellPressed = true;
     super.onTapDown(event);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
-    // Removes the save state if the game is over or won
-    if (backend!.playingGrid.isGameOver || backend!.playingGrid.gameIsWon()) {
-      backend!.removeSaveState();
+    // Guard clause to prevent illegal inputs
+    if (CellInputManager.illegalInput(this)) {
       return;
     }
 
-    // If the cell is already selected or flagged (with wrong input type), do not allow input
-    else if (_inputNotAllowed()) {
-      return;
-    }
-
+    cellPressed = false;
     // If the cell is revealed, and the input type is clear, and the chording is possible, then chord
-    else if (_chordingPossible()) {
+    if (CellInputManager.chordingPossible(this)) {
       backend!.initiateChording(content!);
       return;
     }
@@ -159,18 +158,4 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
     backend!.stopTimer();
     backend!.removeSaveState(); // Hit a mine, remove the save state
   }
-
-  bool _inputNotAllowed() =>
-      (selected == true || // Cell is already selected
-          content!.isFlagged &&
-              game.inputType ==
-                  InputType
-                      .clear) && // Cell is flagged and the input type is not flag
-      !_chordingPossible();
-
-  bool _chordingPossible() =>
-      game.inputType == InputType.clear && // Currently Clearing
-      content!.isRevealed && // The square is revealed
-      backend!.playingGrid.getAdjacentFlagCount(content!.position) ==
-          content!.value; // There are sufficient flags around the square
 }
