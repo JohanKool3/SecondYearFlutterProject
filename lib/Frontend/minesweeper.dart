@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -26,7 +27,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   // Positional Components
   late Vector2 positionOffset;
   double cellDimensions = 57;
-  Color currentColor = const Color.fromARGB(255, 17, 204, 73);
+  Color currentColor = Color.fromARGB(255, 37, 129, 1);
 
   // Logical Components
   InputType inputType = InputType.clear;
@@ -109,6 +110,8 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
         //Restart Game
       } else if (event.logicalKey == LogicalKeyboardKey.keyR) {
         generateNewGame(backend.information.difficulty);
+      } else if (event.logicalKey == LogicalKeyboardKey.escape) {
+        exit(0);
       }
     }
     return super.onKeyEvent(event, keysPressed);
