@@ -1,8 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Frontend/Managers/cell_input_manager.dart';
+import 'package:flutter_application_1/Frontend/Managers/cell_permissions_manager.dart';
+import 'package:flutter_application_1/Frontend/Managers/cell_visibility_manager.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
 
@@ -42,18 +43,18 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
     if (content!.isFlagged) {
       sprite = sprites[3];
     } else if (content!.isRevealed) {
-      _reveal();
+      CellVisibilityManager.reveal(this);
       selected = true;
     }
   }
 
   @override
   void update(double dt) {
-    // Update the sprite if the cell has been flagged, or revealed
     if (content!.isFlagged) {
+      // Update if the cell is flagged via non input means (e.g. loading a save state)
       sprite = sprites[3];
     } else if (content!.isRevealed) {
-      _reveal();
+      CellVisibilityManager.reveal(this);
       selected = true;
     }
 
@@ -67,82 +68,30 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
   @override
   onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
-    if (CellInputManager.inputNotAllowed(this)) return;
+    if (CellPermissionsManager.inputNotAllowed(this)) return;
     super.onHoverEnter();
   }
 
   @override
   void onHoverExit() {
-    if (CellInputManager.inputNotAllowed(this)) return;
+    if (CellPermissionsManager.inputNotAllowed(this)) return;
     super.onHoverExit();
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    if (CellInputManager.inputNotAllowed(this)) return;
+    if (CellPermissionsManager.inputNotAllowed(this)) return;
     cellPressed = true;
     super.onTapDown(event);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
-    // Guard clause to prevent illegal inputs
-    if (CellInputManager.illegalInput(this)) {
-      return;
-    }
-
-    cellPressed = false;
-    // If the cell is revealed, and the input type is clear, and the chording is possible, then chord
-    if (CellInputManager.chordingPossible(this)) {
-      backend!.initiateChording(content!);
-      return;
-    }
-
-    // Toggle flag for the cell
-    else if (game.inputType == InputType.flag) {
-      // Check if the user has placed all the flags and is trying to add flags
-      if (!content!.isFlagged &&
-          (backend!.information.deployedFlags >=
-              backend!.information.flagsToPlace)) {
-        return;
-      }
-      sprite = sprites[0];
-      backend!.takeUserInput(content!.position, game.inputType);
-      return;
-    }
-
-    // User has hit a mine, game is over
-    else if (content!.isMine) {
-      sprite = sprites[4];
-      selected = true;
-      backend!.takeUserInput(content!.position, game.inputType);
-      return;
-    } else {
-      // Passed through all other possible outcomes, must be a normal cell clear
-      _reveal();
-      backend!.takeUserInput(content!.position, game.inputType);
-      selected = true;
-
-      return;
-    }
+    CellInputManager.takeInput(this);
   }
 
   void assignContent(GridContent contentIn) {
     content = contentIn;
-  }
-
-  void _reveal() {
-    sprite = switch (content!.value) {
-      1 => sprites[5],
-      2 => sprites[6],
-      3 => sprites[7],
-      4 => sprites[8],
-      5 => sprites[9],
-      6 => sprites[10],
-      7 => sprites[11],
-      8 => sprites[12],
-      _ => sprites[13], // Must be an empty cell
-    };
   }
 
   void _revealMinesOnGameOver() {
