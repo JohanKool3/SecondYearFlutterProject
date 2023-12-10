@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
     //Manager setup
     grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
+
     buttons = ButtonManager(backend, grid.bottomLeft,
         Vector2(cellDimensions * 1.5, cellDimensions / 2),
         buttonSpacing: 10);
@@ -43,6 +45,31 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
   @override
   Future<void> onLoad() async {
+    try {
+      _dynamicScaling();
+      _resetGUI();
+    } catch (e) {
+      // When there is concurrent operations, cannot delete children (we must wait)
+      return;
+    }
+
+    generateGameObjects();
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+
+    try {
+      if (_newScale() != cellDimensions) {
+        // Only resize if there is a need to
+        _dynamicScaling();
+        _resetGUI();
+      }
+    } catch (e) {
+      // When there is concurrent operations, cannot delete children (we must wait)
+      return;
+    }
     generateGameObjects();
   }
 
@@ -90,14 +117,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     backend.stopTimer();
     backend.setTime(0);
 
-    // Remove all children
-    for (var child in children) {
-      remove(child);
-    }
-
-    grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
-
-    generateGameObjects();
+    _resetGUI();
     backend.startTimer();
   }
 
@@ -112,6 +132,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   void generateGameObjects() {
     // Generate game objects here
     // Create an instance of the Components of the game
+
     addAll(grid.cells);
     addAll(buttons.buttons);
     addAll([
@@ -145,5 +166,36 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
 
     // Remove save state
     backend.removeSaveState();
+  }
+
+  double _newScale() {
+    // Find the minimum of the two, this will be the scaling factor
+    double width = size[0];
+    double height = size[1];
+
+    // A cell is about 1 / 12 of the screen
+
+    return min(width, height) / 12;
+  }
+
+  void _dynamicScaling() {
+    // Set the cell dimensions to the cell size
+    cellDimensions = _newScale();
+    generateGameObjects();
+  }
+
+  void _resetGUI() {
+    // Remove all children
+    for (var child in children) {
+      remove(child);
+    }
+
+    grid = GridManager(backend, positionOffset, cellDimensions: cellDimensions);
+
+    buttons = ButtonManager(backend, grid.bottomLeft,
+        Vector2(cellDimensions * 1.5, cellDimensions / 2),
+        buttonSpacing: 10);
+
+    generateGameObjects();
   }
 }

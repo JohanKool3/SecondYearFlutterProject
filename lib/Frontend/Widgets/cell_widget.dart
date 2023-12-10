@@ -157,6 +157,7 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
 
     // Stop the timer on game over
     backend!.stopTimer();
+    backend!.removeSaveState(); // Hit a mine, remove the save state
   }
 
   bool _inputNotAllowed() =>

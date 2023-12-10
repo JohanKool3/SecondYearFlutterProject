@@ -6,7 +6,7 @@ import 'package:flutter_application_1/Backend/settings.dart';
 class FlagAmountWidget extends TextBoxComponent {
   FlagAmountWidget(Vector2 newPos, Vector2 size, this.backend)
       : super(
-          text: "00",
+          text: "|Flags|",
           position: newPos,
           size: size,
           anchor: Anchor.topLeft,

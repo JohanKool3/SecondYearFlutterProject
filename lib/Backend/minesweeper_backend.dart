@@ -1,4 +1,3 @@
-import 'package:flame/game.dart';
 import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
@@ -137,6 +136,13 @@ class MinesweeperBackend {
         // Reveal the square
         playingGrid.revealSquare(square);
       }
+    }
+
+    // Save state unless a mine has been hit, then delete it
+    if (playingGrid.contents[content.position]!.isMine) {
+      removeSaveState();
+    } else {
+      saveGameState();
     }
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 class TimerBoxWidget extends TextBoxComponent {
   TimerBoxWidget(Vector2 newPos, Vector2 size, this.backend)
       : super(
-          text: "00:00",
+          text: "|Timer|",
           position: newPos,
           size: size,
           anchor: Anchor.topLeft,

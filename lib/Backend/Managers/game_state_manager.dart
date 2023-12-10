@@ -47,8 +47,6 @@ class GameStateManager {
       // Set game state
       currentState = state;
 
-      // Delete entry from database
-      database.delete(1);
       // _debugPrint(state);
       return true;
       // No save state has been found, return false
@@ -64,6 +62,7 @@ class GameStateManager {
   }
 
   void _debugPrint(GameState state) {
+    // Useful for debugging Database issues
     List<List<String>> gridList = GameContentLoader.saveContents(state);
 
     int width = gridList.length;
