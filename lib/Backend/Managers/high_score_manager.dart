@@ -45,14 +45,6 @@ class HighscoreManager {
     }
   }
 
-  void saveContents() {
-    // TODO: Integrate with database manager
-  }
-
-  void importContents() {
-    // TODO: Integrate with database manager
-  }
-
   void importTestData(List<HighscoreEntry> testData) {
     for (HighscoreEntry entry in testData) {
       addHighscore(entry);

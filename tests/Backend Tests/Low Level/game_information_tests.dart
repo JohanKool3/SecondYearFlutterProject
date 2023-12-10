@@ -64,7 +64,6 @@ void main() {
       expect(() => test.deployFlag(), throwsA(isA<Exception>()));
     });
 
-    // TODO: Make sure this unit test is functioning as intended
     test('Game Information time should be 1', () {
       late GameInformation test = GameInformation();
       while (test.time != 1) {}

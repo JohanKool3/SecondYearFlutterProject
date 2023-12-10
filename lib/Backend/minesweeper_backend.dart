@@ -120,7 +120,8 @@ class MinesweeperBackend {
       Difficulty.hard => "Hard",
     };
 
-    print("You won the game in $time seconds on $difficulty!");
+    //TODO: Implement readout system for the game won screen
+    // print("You won the game in $time seconds on $difficulty!");
   }
 
   void initiateChording(GridContent content) {

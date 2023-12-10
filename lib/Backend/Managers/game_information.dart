@@ -10,7 +10,6 @@ class GameInformation {
   late int flagsToPlace = Settings.easyMines;
   late Difficulty difficulty = Difficulty.easy;
   late List<int> dimensions = Settings.easyDimensions;
-  // TODO: Add Highscores
 
   // Getters to make dimension references easier
   int get width => dimensions[0];

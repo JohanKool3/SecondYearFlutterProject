@@ -61,21 +61,21 @@ class GameStateManager {
     database.put(1, currentState.toModel());
   }
 
-  void _debugPrint(GameState state) {
-    // Useful for debugging Database issues
-    List<List<String>> gridList = GameContentLoader.saveContents(state);
+  // void _debugPrint(GameState state) {
+  //   // Useful for debugging Database issues
+  //   List<List<String>> gridList = GameContentLoader.saveContents(state);
 
-    int width = gridList.length;
-    int height = gridList[0].length;
+  //   int width = gridList.length;
+  //   int height = gridList[0].length;
 
-    for (int row = 0; row < width; row++) {
-      String rowString = "[";
-      for (int column = 0; column < height; column++) {
-        String item = gridList[row][column];
+  //   for (int row = 0; row < width; row++) {
+  //     String rowString = "[";
+  //     for (int column = 0; column < height; column++) {
+  //       String item = gridList[row][column];
 
-        rowString += "$item,";
-      }
-      print("$rowString]");
-    }
-  }
+  //       rowString += "$item,";
+  //     }
+  //     print("$rowString]");
+  //   }
+  // }
 }
