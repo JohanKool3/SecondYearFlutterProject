@@ -1,11 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/flame.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
-import 'package:flame_audio/flame_audio.dart';
 
 class CellWidget extends Button with HasGameRef<Minesweeper> {
   CellWidget(double size, Vector2 newPos, this.content, backend)
@@ -67,7 +65,6 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
   onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
     if (_inputNotAllowed()) return;
-    if (selected == false) FlameAudio.play('selectSFX.wav');
     super.onHoverEnter();
   }
 
@@ -98,7 +95,6 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
 
     // If the cell is revealed, and the input type is clear, and the chording is possible, then chord
     else if (_chordingPossible()) {
-      FlameAudio.play('clearSFX.wav');
       backend!.initiateChording(content!);
       return;
     }
@@ -113,29 +109,17 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
       }
       sprite = sprites[0];
       backend!.takeUserInput(content!.position, game.inputType);
-
-      // If the cell is flagged, play the flag sound
-      if (content!.isFlagged) {
-        FlameAudio.play('placeflagSFX.wav');
-      }
-
-      // If the cell is unflagged, play the unflag sound
-      else {
-        FlameAudio.play('removeFlagSFX.wav');
-      }
       return;
     }
 
     // User has hit a mine, game is over
     else if (content!.isMine) {
-      FlameAudio.play('hitMineSFX.wav');
       sprite = sprites[4];
       selected = true;
       backend!.takeUserInput(content!.position, game.inputType);
       return;
     } else {
       // Passed through all other possible outcomes, must be a normal cell clear
-      FlameAudio.play('clearSFX.wav');
       _reveal();
       backend!.takeUserInput(content!.position, game.inputType);
       selected = true;

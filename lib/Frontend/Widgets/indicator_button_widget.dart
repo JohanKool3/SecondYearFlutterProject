@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
@@ -42,10 +41,8 @@ class IndicatorButtonWidget extends Button with HasGameRef<Minesweeper> {
   void _toggleInput() {
     if (game.inputType == InputType.flag) {
       game.inputType = InputType.clear;
-      FlameAudio.play("clearSFX.wav");
     } else {
       game.inputType = InputType.flag;
-      FlameAudio.play("placeFlagSFX.wav");
     }
   }
 }

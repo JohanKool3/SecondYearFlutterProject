@@ -1,6 +1,5 @@
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
@@ -73,15 +72,12 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     if (event is RawKeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.keyA) {
         inputType = InputType.clear;
-        FlameAudio.play("clearSFX.wav");
       } else if (event.logicalKey == LogicalKeyboardKey.keyD) {
         inputType = InputType.flag;
-        FlameAudio.play("placeFlagSFX.wav");
 
         //Restart Game
       } else if (event.logicalKey == LogicalKeyboardKey.keyR) {
         generateNewGame(backend.information.difficulty);
-        FlameAudio.play('resetGameSFX.wav');
       }
     }
     return super.onKeyEvent(event, keysPressed);

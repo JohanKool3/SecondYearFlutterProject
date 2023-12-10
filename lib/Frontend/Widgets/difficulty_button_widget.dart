@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Frontend/Templates/button.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
@@ -22,7 +21,6 @@ class DifficultyButtonWidget extends Button with HasGameReference<Minesweeper> {
 
   @override
   void onTapUp(TapUpEvent event) {
-    FlameAudio.play('difficultySelectionSFX.wav');
     // Change the difficulty to the difficulty of this button
     game.generateNewGame(difficulty!);
     game.backend
