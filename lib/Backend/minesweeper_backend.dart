@@ -111,7 +111,7 @@ class MinesweeperBackend {
     information.startTimer();
   }
 
-  void printGameWon() {
+  String returnGameWonStatus() {
     int time = information.time;
 
     String difficulty = switch (stateManager.difficulty) {
@@ -121,7 +121,7 @@ class MinesweeperBackend {
     };
 
     //TODO: Implement readout system for the game won screen
-    // print("You won the game in $time seconds on $difficulty!");
+    return "You won the game in $time seconds on $difficulty!";
   }
 
   void initiateChording(GridContent content) {

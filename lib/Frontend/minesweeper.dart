@@ -162,7 +162,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
         "game_won",
         Vector2(cellDimensions * 9, cellDimensions * 4),
         Vector2(positionOffset.x, cellDimensions * 4.5)));
-    backend.printGameWon();
+    backend.returnGameWonStatus();
 
     // Remove save state
     backend.removeSaveState();

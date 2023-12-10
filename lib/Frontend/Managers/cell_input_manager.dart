@@ -16,7 +16,6 @@ class CellInputManager {
     MinesweeperBackend? backend = cell.backend;
     GridContent? content = cell.content;
     Minesweeper game = cell.gameRef;
-    List<Sprite> sprites = cell.sprites;
 
     // Guard clause to prevent illegal inputs
     if (CellPermissionsManager.illegalInput(cell)) {

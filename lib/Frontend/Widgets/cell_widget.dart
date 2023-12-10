@@ -58,9 +58,14 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
       selected = true;
     }
 
+    // Update the sprite if the cell is pressed
+    if (cellPressed) {
+      CellInputManager.takeInput(this);
+    }
+
     // Update the sprite if the game is over
     if (backend!.playingGrid.isGameOver) {
-      _revealMinesOnGameOver();
+      CellVisibilityManager.revealMinesOnGameOver(this);
     }
     super.update(dt);
   }
@@ -88,23 +93,5 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
   @override
   void onTapUp(TapUpEvent event) {
     CellInputManager.takeInput(this);
-  }
-
-  void assignContent(GridContent contentIn) {
-    content = contentIn;
-  }
-
-  void _revealMinesOnGameOver() {
-    if (content!.isMine && !content!.isFlagged) {
-      sprite = sprites[4];
-    }
-
-    if (content!.isFlagged && !content!.isMine) {
-      sprite = sprites[14];
-    }
-
-    // Stop the timer on game over
-    backend!.stopTimer();
-    backend!.removeSaveState(); // Hit a mine, remove the save state
   }
 }
