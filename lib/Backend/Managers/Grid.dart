@@ -75,72 +75,6 @@ class Grid {
     }
   }
 
-  void _checkForField(String position) {
-    // Check for neighbouring squares which are also empty Only if the current position is also empty
-
-    if (contents[position]?.value == 0) {
-      // Generate the surrounding squares
-      List<String> surroundingSquares =
-          generateSurroundingSquares(position).toList();
-
-      // Loop through the surrounding squares
-      for (String square in surroundingSquares) {
-        // Check if the square is already revealed
-        if (!contents[square]!.isRevealed) {
-          // Reveal the square
-          revealSquare(square);
-        }
-      }
-    }
-  }
-
-  bool _checkForMine(String position) => contents[position]?.isMine ?? false;
-
-  void _setDimensions(int width, int height) {
-    dimensions = [width, height];
-  }
-
-  void _setupContents(int difficultyMines) {
-    contents = {};
-
-    int width = dimensions[0];
-    int height = dimensions[1];
-
-    // Setup the grid
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        contents["($i, $j)"] = GridContent(false, "($i, $j)", false, false);
-      }
-    }
-
-    // Setup the mines
-    int currentMines = 0;
-    // Checks for custom mine amounts that are used for TESTING
-    int mineAmount = difficultyMines;
-
-    // Guard Clause to prevent infinite loops
-    if (mineAmount > width * height) {
-      throw Exception("Too many mines for the grid size");
-    }
-
-    while (currentMines != mineAmount) {
-      int xPos = Random().nextInt(width);
-      int yPos = Random().nextInt(height);
-
-      String position = "($xPos, $yPos)";
-
-      if (!contents[position]!.isMine) {
-        contents[position]!.setMine();
-        currentMines++;
-      }
-    }
-
-    // Setup the values
-    setupValues();
-  }
-
-  bool _validateInput(String input) => contents.containsKey(input);
-
   int getMineAmount() {
     int mineAmount = 0;
 
@@ -236,4 +170,70 @@ class Grid {
 
     return flagAmount;
   }
+
+  void _checkForField(String position) {
+    // Check for neighbouring squares which are also empty Only if the current position is also empty
+
+    if (contents[position]?.value == 0) {
+      // Generate the surrounding squares
+      List<String> surroundingSquares =
+          generateSurroundingSquares(position).toList();
+
+      // Loop through the surrounding squares
+      for (String square in surroundingSquares) {
+        // Check if the square is already revealed
+        if (!contents[square]!.isRevealed) {
+          // Reveal the square
+          revealSquare(square);
+        }
+      }
+    }
+  }
+
+  bool _checkForMine(String position) => contents[position]?.isMine ?? false;
+
+  void _setDimensions(int width, int height) {
+    dimensions = [width, height];
+  }
+
+  void _setupContents(int difficultyMines) {
+    contents = {};
+
+    int width = dimensions[0];
+    int height = dimensions[1];
+
+    // Setup the grid
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        contents["($i, $j)"] = GridContent(false, "($i, $j)", false, false);
+      }
+    }
+
+    // Setup the mines
+    int currentMines = 0;
+    // Checks for custom mine amounts that are used for TESTING
+    int mineAmount = difficultyMines;
+
+    // Guard Clause to prevent infinite loops
+    if (mineAmount > width * height) {
+      throw Exception("Too many mines for the grid size");
+    }
+
+    while (currentMines != mineAmount) {
+      int xPos = Random().nextInt(width);
+      int yPos = Random().nextInt(height);
+
+      String position = "($xPos, $yPos)";
+
+      if (!contents[position]!.isMine) {
+        contents[position]!.setMine();
+        currentMines++;
+      }
+    }
+
+    // Setup the values
+    setupValues();
+  }
+
+  bool _validateInput(String input) => contents.containsKey(input);
 }

@@ -17,12 +17,10 @@ class GridContent {
   int get value => _value;
 
   void revealSquare() => _isRevealed = true;
-
   void toggleFlag() => (isFlagged) ? _removeFlag() : _flagSquare();
   void setMine() => _isMine = true;
+  void incrementValue() => _value++;
 
   void _flagSquare() => _isFlagged = true;
   void _removeFlag() => _isFlagged = false;
-
-  void incrementValue() => _value++;
 }

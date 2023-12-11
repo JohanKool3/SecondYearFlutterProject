@@ -57,7 +57,6 @@ class GameStateManager {
 
   void saveGameState(Box database) {
     // Save the game state to the database
-
     database.put(1, currentState.toModel());
   }
 
