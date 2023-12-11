@@ -36,6 +36,5 @@ void main() {
 
       expect(() => test.grid[0][0], returnsNormally);
     });
-    // TODO: ReWrite these tests to work with the new GameStateModel
   });
 }

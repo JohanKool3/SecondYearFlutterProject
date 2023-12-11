@@ -27,7 +27,7 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
   // Positional Components
   late Vector2 positionOffset;
   double cellDimensions = 57;
-  Color currentColor = Color.fromARGB(255, 37, 129, 1);
+  Color currentColor = const Color.fromARGB(255, 37, 129, 1);
 
   // Logical Components
   InputType inputType = InputType.clear;
@@ -169,7 +169,6 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
         "game_won",
         Vector2(cellDimensions * 9, cellDimensions * 4),
         Vector2(positionOffset.x, cellDimensions * 4.5)));
-    backend.returnGameWonStatus();
 
     // Remove save state
     backend.removeSaveState();
