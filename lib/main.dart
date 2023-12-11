@@ -1,5 +1,4 @@
 import 'package:flame/game.dart';
-import 'package:flame/flame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
@@ -11,8 +10,6 @@ late MinesweeperBackend backend;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Flame.device.fullScreen();
-  Flame.device.setLandscape();
 
   await Hive.initFlutter();
   Hive.registerAdapter(GameStateModelAdapter());

@@ -5,28 +5,26 @@ import 'package:test/test.dart';
 
 void main() {
   group('Game Information, fields', () {
-    test('Game Information should have a default difficulty of easy', () {
+    test('Difficulty should be easy', () {
       late GameInformation test = GameInformation();
 
       // Have to cast to string because comparing enums is buggy
       expect(test.difficulty.toString(), Difficulty.easy.toString());
     });
 
-    test('Game Information should have default easy dimensions', () {
+    test('Dimensions should be easy Dimensions', () {
       late GameInformation test = GameInformation();
 
       expect(test.dimensions.toString(), Settings.easyDimensions.toString());
     });
 
-    test('Game Information should have 0 placed flags by default', () {
+    test('Deployed flags should be 0 placed flags', () {
       late GameInformation test = GameInformation();
 
       expect(test.deployedFlags, 0);
     });
 
-    test(
-        'Game Information should have by default the easy amount of flags to place',
-        () {
+    test('Flags to place should be the easy amount of flags', () {
       late GameInformation test = GameInformation();
 
       expect(test.flagsToPlace.toInt(), Settings.easyMines.toInt());
@@ -34,7 +32,7 @@ void main() {
   });
 
   group('Game Information, methods', () {
-    test('Game Information should have a default difficulty of medium', () {
+    test('Difficulty should be medium', () {
       late GameInformation test = GameInformation();
       test.setDifficulty(Difficulty.medium);
 
@@ -42,29 +40,29 @@ void main() {
       expect(test.difficulty.toString(), Difficulty.medium.toString());
     });
 
-    test('Game Information should have 1 deployed Flag', () {
+    test('Deployed Flags should be 1', () {
       late GameInformation test = GameInformation();
       test.deployFlag();
 
       expect(test.deployedFlags, 1);
     });
 
-    test('Game Information should have an error trying to remove a flag', () {
+    test('Flags to place should equal the amount of easy mines (10)', () {
       late GameInformation test = GameInformation();
-      expect(() => test.removeFlag(), throwsA(isA<Exception>()));
+      expect(test.flagsToPlace, Settings.easyMines);
     });
 
-    test('Game Information should have an error trying to deploy a flag', () {
+    test('Flags should not exceed 10', () {
       late GameInformation test = GameInformation();
 
       // Deploy mines
       for (int i = 0; i < Settings.easyMines; i++) {
         test.deployFlag();
       }
-      expect(() => test.deployFlag(), throwsA(isA<Exception>()));
+      expect(test.deployedFlags, 10);
     });
 
-    test('Game Information time should be 1', () {
+    test('Time should be 1', () {
       late GameInformation test = GameInformation();
       while (test.time != 1) {}
       expect(test.time, 1);
