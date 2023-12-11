@@ -1,7 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
+import 'package:flutter_application_1/Backend/Database/Models/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 import 'package:flutter_application_1/Frontend/minesweeper.dart';
 import 'package:hive_flutter/adapters.dart';

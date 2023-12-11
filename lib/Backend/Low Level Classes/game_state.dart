@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/Backend/Database/Models/HighScore/GameState/game_state_model.dart';
+import 'package:flutter_application_1/Backend/Database/Models/GameState/game_state_model.dart';
 import 'package:flutter_application_1/Backend/Database/game_content_loader.dart';
 import 'package:flutter_application_1/Backend/Enums/difficulty.dart';
 import 'package:flutter_application_1/Backend/Enums/input_type.dart';

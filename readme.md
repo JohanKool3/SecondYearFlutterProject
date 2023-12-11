@@ -27,11 +27,10 @@ Using any click on a cell will either reveal (if in [reveal mode](#reveal-mode))
  ### Keyboard Shortcuts
  To select modes, you can also use the following shortcuts
 
- -  Use the **D** key to change to [flag mode](#flag-mode)
-
- -  Use the **A** key to change to [reveal mode](#reveal-mode))
- -  Use the **R** key to **restart the game**
- -  Use the **Escape** key to **quit the game**
+-   Use the **D** key to change to [flag mode](#flag-mode)
+-   Use the **A** key to change to [reveal mode](#reveal-mode))
+-   Use the **R** key to **restart the game**
+-   Use the **Escape** key to **quit the game**
 
 <a id="input-modes"></a>
 
