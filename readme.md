@@ -1,5 +1,4 @@
-# Minesweeper
-
+# Minesweeper [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1ba7472fd1c34d1f9e4b3a87427b5f8d)](https://app.codacy.com/gh/JohanKool3/SecondYearFlutterProject/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 **Table of Contents**
 - [Controls](#controls)
     - [Mouse Input](#mouse-input)
