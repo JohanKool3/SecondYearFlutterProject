@@ -71,7 +71,7 @@ class CellWidget extends Button with HasGameRef<Minesweeper> {
   }
 
   @override
-  onHoverEnter() async {
+  void onHoverEnter() async {
     // Change the sprite when the mouse enters the cell
     if (CellPermissionsManager.inputNotAllowed(this)) return;
     super.onHoverEnter();

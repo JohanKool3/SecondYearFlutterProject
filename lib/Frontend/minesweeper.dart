@@ -91,12 +91,6 @@ class Minesweeper extends FlameGame with HasKeyboardHandlerComponents {
     }
   }
 
-  @override
-  void render(Canvas canvas) {
-    // Render game graphics here
-    super.render(canvas);
-  }
-
   // Take keyboard input, press a for clear, d for flag
   @override
   KeyEventResult onKeyEvent(

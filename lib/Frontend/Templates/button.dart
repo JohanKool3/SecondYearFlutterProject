@@ -2,7 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter_application_1/Backend/minesweeper_backend.dart';
 
-class Button extends SpriteComponent with HoverCallbacks, TapCallbacks {
+abstract class Button extends SpriteComponent
+    with HoverCallbacks, TapCallbacks {
   Button(this.name, Vector2 size, Vector2 newPos, this.backend)
       : super(size: size, position: newPos);
 
