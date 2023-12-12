@@ -10,6 +10,9 @@
 
 -   [Difficulty Selection](#difficulty-selection)
 
+## Configuration
+This application requires no other user input to run. Simply click on the .exe file.
+
 <a id="controls"></a>
 
 ## Controls
