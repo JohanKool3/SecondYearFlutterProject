@@ -52,7 +52,12 @@ class Grid {
 
       // Check if the square is a mine
       if (_checkForMine(position)) {
-        unFlaggedMines--;
+        // Check to see if the flag has been placed, if so decrement 1
+        if (contents[position]?.isFlagged ?? false) {
+          unFlaggedMines++;
+        } else {
+          unFlaggedMines--;
+        }
       }
     } else {
       throw Exception("Positon is not valid");
