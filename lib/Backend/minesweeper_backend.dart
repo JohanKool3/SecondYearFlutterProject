@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Backend/Low%20Level%20Classes/grid_content
 import 'package:flutter_application_1/Backend/Managers/grid.dart';
 import 'package:flutter_application_1/Backend/Managers/game_information.dart';
 import 'package:flutter_application_1/Backend/Managers/game_state_manager.dart';
+import 'package:flutter_application_1/Backend/settings.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:hive/hive.dart';
 
@@ -25,6 +26,12 @@ class MinesweeperBackend {
     // Determine the amount of flags and add to information object
     information.difficulty = stateManager.difficulty;
     information.deployedFlags = playingGrid.getFlagAmount();
+    // Update the max flags here too
+    information.flagsToPlace = switch (information.difficulty) {
+      Difficulty.easy => Settings.easyMines,
+      Difficulty.medium => Settings.mediumMines,
+      Difficulty.hard => Settings.hardMines,
+    };
   }
 
   // Returns if the game is running

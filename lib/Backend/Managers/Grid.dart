@@ -54,9 +54,9 @@ class Grid {
       if (_checkForMine(position)) {
         // Check to see if the flag has been placed, if so decrement 1
         if (contents[position]?.isFlagged ?? false) {
-          unFlaggedMines++;
-        } else {
           unFlaggedMines--;
+        } else {
+          unFlaggedMines++;
         }
       }
     } else {
